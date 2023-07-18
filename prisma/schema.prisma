@@ -11,9 +11,9 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  username String @unique
-  passwordHash String
+  id            String @id @default(uuid())
+  username      String @unique
+  passwordHash  String
   userAuthToken String @unique
 
   createdAt DateTime @default(now())
@@ -25,4 +25,18 @@ model User {
 enum Role {
   USER
   ADMIN
+}
+
+model Product {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  link   LINK   @relation(fields: [lINKId], references: [id])
+  lINKId Int
+}
+
+model LINK {
+  id      Int       @id @default(autoincrement())
+  country String
+  url     String
+  Product Product[]
 }
