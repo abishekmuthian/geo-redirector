@@ -30,13 +30,13 @@ enum Role {
 model Product {
   id     Int    @id @default(autoincrement())
   name   String @unique
-  link   LINK   @relation(fields: [lINKId], references: [id])
-  lINKId Int
+  links  Link[]
 }
 
-model LINK {
+model Link {
   id      Int       @id @default(autoincrement())
   country String
   url     String
-  Product Product[]
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
 }

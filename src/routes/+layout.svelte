@@ -16,10 +16,13 @@
 
   {#if $page.data.user}
     <a href="/admin">Admin</a>
-
+    <a href="/productsList">Products</a>
     <form action="/logout" method="POST" use:enhance>
       <button type="submit">Log out</button>
     </form>
+    <!-- <form action="/productsList" use:enhance>
+      <button type="submit">Products Page</button>
+    </form> -->
   {/if}
 </nav>
 
