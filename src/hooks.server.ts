@@ -2,6 +2,11 @@ import type { Handle } from "@sveltejs/kit";
 import { db } from "$lib/database";
 
 export const handle: Handle = async ({ event, resolve }) => {
+  // Get the ip from the headers
+  console.log("headers: ", event.request.headers);
+
+  console.log("Country: ", event.request.headers.get("x-vercel-ip-country"));
+
   // get cookies from browser
   const session = event.cookies.get("session");
 
