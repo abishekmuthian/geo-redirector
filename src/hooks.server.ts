@@ -2,6 +2,22 @@ import type { Handle } from "@sveltejs/kit";
 import { db } from "$lib/database";
 
 export const handle: Handle = async ({ event, resolve }) => {
+  // Get the ip from the headers
+  console.log("headers: ", event.request.headers);
+
+  console.log(
+    "Country in hooks: ",
+    event.request.headers.get("x-vercel-ip-country")
+  );
+
+  // If the country isn't received from the header, Set a default country (Get the country from vercel env)
+
+  const defaultCountry = process.env.DEFAULT_COUNTRY || "";
+  const country =
+    event.request.headers.get("x-vercel-ip-country") || defaultCountry;
+
+  event.locals.country = country;
+
   // get cookies from browser
   const session = event.cookies.get("session");
 

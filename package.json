@@ -1,27 +1,28 @@
 {
-	"name": "geo-redirector",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/kit": "^1.20.4",
-		"@types/bcrypt": "^5.0.0",
-		"svelte": "^4.0.0",
-		"svelte-check": "^3.4.3",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
-		"vite": "^4.3.6"
-	},
-	"type": "module",
-	"dependencies": {
-		"@prisma/client": "^4.16.2",
-		"bcrypt": "^5.1.0"
-	}
+  "name": "geo-redirector",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "npx prisma generate && vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.20.4",
+    "@types/bcrypt": "^5.0.0",
+    "svelte": "^4.0.0",
+    "svelte-check": "^3.4.3",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0",
+    "vite": "^4.3.6"
+  },
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^4.16.2",
+    "@sveltejs/adapter-vercel": "^3.0.2",
+    "bcrypt": "^5.1.0"
+  }
 }
