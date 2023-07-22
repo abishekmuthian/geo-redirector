@@ -7,6 +7,7 @@ declare global {
         name: string;
         role: string;
       };
+      country: string;
     }
     // interface Error {}
     // interface Locals {}
