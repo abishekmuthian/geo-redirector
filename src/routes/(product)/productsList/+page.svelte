@@ -38,7 +38,9 @@
           localhost.com/product/{`${encodeURI(item.name)}`}
         </td>
         <td>
-          <button>Edit</button>
+          <button>
+            <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
+          </button>
           <button>Delete</button>
         </td>
       </tr>
