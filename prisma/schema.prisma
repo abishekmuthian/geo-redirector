@@ -35,7 +35,7 @@ model Product {
 
 model Link {
   id      Int       @id @default(autoincrement())
-  country String
+  country String    @unique
   url     String
   product Product @relation(fields: [productId], references: [id])
   productId Int

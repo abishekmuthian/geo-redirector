@@ -9,7 +9,7 @@
 
   let fetchedData = data.page_server_data.productRows;
 
-  console.log("data in pages: ", data.page_server_data.productRows);
+  // console.log("data in pages: ", data.page_server_data.productRows);
 </script>
 
 <br />
@@ -41,7 +41,10 @@
           <button>
             <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
           </button>
-          <button>Delete</button>
+          <button>
+            Delete
+            <!-- <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a> -->
+          </button>
         </td>
       </tr>
     {/each}

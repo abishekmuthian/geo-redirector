@@ -10,34 +10,21 @@
   let submitting;
 
   let fetchedData = data.page_server_data.productRow;
-
-  console.log("data in edit pages: ", fetchedData);
   let productName = fetchedData?.name;
   let linksArr = fetchedData?.links;
-  let selected: string = "-Select Country";
+  let selected: string = "-Select Country-";
 
   let countryCodes = [];
   let key: string;
   for (let i = 0; i < countries.length; i++) {
-    // let key = countries[i]["name"]["common"];
     let key = countries[i]["cca2"];
     countryCodes.push({ [key]: countries[i]["name"]["common"] });
   }
-
-  // console.log(countryCodes);
-  // console.log(countryCodes["DE"]);
 
   let values: { country: string; url: string }[] = [];
   if (fetchedData?.links.length) {
     for (let i = 0; i < fetchedData?.links.length; i++) {
       values.push(fetchedData?.links[i]);
-
-      // console.log("country::: ", fetchedData?.links[i].country);
-
-      // values.push({
-      //   ...fetchedData?.links[i],
-      //   country: countryCodes[[fetchedData?.links[i].country]],
-      // });
     }
   }
   console.log("values:0 ", values[0]);
@@ -74,13 +61,6 @@
       <div class="link">
         <div>
           <label for="country">Country</label>
-          <!-- <input
-            id="country"
-            name="country"
-            type="text"
-            bind:value={values[i].country}
-            required
-          /> -->
           <select name="country" id="country">
             {#if !values[i]["country"]}
               <option disabled value="" selected>-Select country-</option>
@@ -127,12 +107,6 @@
       {/if}
     </div>
 
-    <!-- {#if form?.product}
-      <p class="error">
-        Product is already in database. Please add the new product.
-      </p>
-    {/if} -->
-
     <button type="submit">Save Product</button>
   </div>
 </form>
@@ -152,9 +126,6 @@
     margin: 5px;
   }
 
-  /* .error {
-    color: tomato;
-  } */
   div {
     margin-bottom: 5px;
     gap: 10px;

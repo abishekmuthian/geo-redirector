@@ -18,13 +18,12 @@ export const load: PageServerLoad = async ({ params: { name } }) => {
       },
     },
   });
-  console.log("edit product:::", editProduct);
+
   return {
     page_server_data: { productRow: editProduct },
   };
 };
 
-console.log("before new edit function");
 // edit Product - save it in the database
 function buildLinksArray(arr = []) {
   let output = [];
@@ -42,16 +41,14 @@ function buildLinksArray(arr = []) {
 
 export const actions = {
   default: async ({ request, locals, params }) => {
-    console.log("actions");
     const data = await request.formData();
-    // console.log(formData);
 
     const vals = [...data.values()];
 
     let inputLinks = buildLinksArray(vals);
-    console.log(inputLinks);
+    // console.log(inputLinks);
 
-    console.log("edit vals: ", [...data.values()]);
+    // console.log("edit vals: ", [...data.values()]);
 
     const productname = data.get("productname");
 
@@ -70,7 +67,7 @@ export const actions = {
     if (product) {
       console.log("product fetched for update");
     }
-    console.log("record create");
+    // console.log("record create");
     const result = await db.product.update({
       where: {
         id: product?.id,
@@ -87,63 +84,10 @@ export const actions = {
         links: true,
       },
     });
-    console.log("edit result: ", result);
+    // console.log("edit result: ", result);
 
     throw redirect(303, "/productsList");
 
     // throw redirect(303, `/editProduct/${params.name}`);
   },
 };
-
-// console.log("before edit function");
-// const editProduct: Action = async ({ request }) => {
-//   const data = await request.formData();
-
-//   const vals = [...data.values()];
-
-//   let inputLinks = buildLinksArray(vals);
-//   console.log(inputLinks);
-
-//   console.log("edit vals: ", [...data.values()]);
-
-//   const productname = data.get("productname");
-
-//   if (typeof productname !== "string") return fail(400, { invalid: true });
-//   for (let i = 0; i < inputLinks.length; i++) {
-//     if (
-//       typeof inputLinks[i]["country"] !== "string" ||
-//       typeof inputLinks[i]["url"] !== "string"
-//     ) {
-//       return fail(400, { invalid: true });
-//     }
-//   }
-
-//   const product = await db.product.findUnique({
-//     where: { name: productname },
-//   });
-
-//   if (product) {
-//     return fail(400, { product: true });
-//   }
-
-//   const products = await db.product.findMany();
-
-//   console.log("record create");
-//   const result = await db.product.create({
-//     data: {
-//       name: productname,
-
-//       links: {
-//         create: inputLinks,
-//       },
-//     },
-//     include: {
-//       links: true,
-//     },
-//   });
-//   console.log(result);
-
-//   throw redirect(303, "/productsList");
-// };
-
-// export const actions: Actions = { editProduct };
