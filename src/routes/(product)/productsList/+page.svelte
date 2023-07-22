@@ -1,15 +1,12 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
   import { invalidateAll } from "$app/navigation";
-  // import { db } from "$lib/database";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
 
   export let data: PageData;
 
   let fetchedData = data.page_server_data.productRows;
-
-  // console.log("data in pages: ", data.page_server_data.productRows);
 </script>
 
 <br />
@@ -42,8 +39,7 @@
             <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
           </button>
           <button>
-            Delete
-            <!-- <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a> -->
+            <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a>
           </button>
         </td>
       </tr>

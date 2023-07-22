@@ -13,7 +13,7 @@ export const load: PageServerLoad = async () => {
       },
     },
   });
-  console.log(products);
+  // console.log(products);
   return {
     page_server_data: { productRows: products },
   };
