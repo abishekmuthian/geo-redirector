@@ -9,67 +9,45 @@
   let fetchedData = data.page_server_data.productRows;
 </script>
 
-<br />
-{#if $page.data.user}
-  <button>
-    <a href="/addProduct">Add Products</a>
-  </button>
-
-  <br />
-{/if}
-
-<br />
-<table>
-  <thead>
-    <tr>
-      <th>Product Name</th>
-      <th>Link</th>
-      <th>Edit/Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    {#each fetchedData as item, index}
-      <tr>
-        <td>{item.name}</td>
-        <td>
-          localhost.com/product/{`${encodeURI(item.name)}`}
-        </td>
-        <td>
-          <button>
-            <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
-          </button>
-          <button>
-            <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a>
-          </button>
-        </td>
-      </tr>
-    {/each}
-  </tbody>
-</table>
-
-<style>
-  table,
-  th,
-  td {
-    border: 1px solid dodgerblue;
-    padding: 2px;
-  }
-
-  table {
-    border-collapse: collapse;
-  }
-  .link-country {
-    width: 50%;
-  }
-  .link-url {
-    width: 50%;
-  }
-
-  a {
-    text-decoration: none;
-    font-weight: 700;
-  }
-  .links-table {
-    width: 100%;
-  }
-</style>
+<div class="flex items-center justify-center p-12">
+  <div class="mx-auto w-full lg:max-w-[680px] max-w-xl">
+    <div class="overflow-x-auto">
+      <h1 class="text-4xl font-medium mb-5">Products</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Link</th>
+            <th>Edit/Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each fetchedData as item, index}
+            <tr>
+              <td>{item.name}</td>
+              <td>
+                localhost.com/product/{`${encodeURI(item.name)}`}
+              </td>
+              <td>
+                <button class="btn btn-info">
+                  <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
+                </button>
+                <button class="btn btn-error">
+                  <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
+                  >
+                </button>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+    <div class="text-right mt-2">
+      {#if $page.data.user}
+        <button class="btn btn-primary">
+          <a href="/addProduct">Add Products</a>
+        </button>
+      {/if}
+    </div>
+  </div>
+</div>
