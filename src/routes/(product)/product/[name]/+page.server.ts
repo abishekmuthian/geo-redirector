@@ -17,7 +17,7 @@ export const load = (async ({ params, locals }) => {
       name: true,
       links: {
         where: {
-          country: "IN",
+          country: locals.country,
         },
         select: {
           country: true,
@@ -27,7 +27,10 @@ export const load = (async ({ params, locals }) => {
     },
   });
   console.log("Required country URL", getProduct?.links[0]["url"]);
+
+  const productURL = getProduct?.links[0]["url"] || "/";
+
   //added
   // Redirect to that product url
-  throw redirect(302, "/");
+  throw redirect(302, productURL);
 }) satisfies PageServerLoad;
