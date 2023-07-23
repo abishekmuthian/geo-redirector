@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "../app.css";
   import { applyAction, enhance } from "$app/forms";
   import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
@@ -10,7 +11,7 @@
 
 <nav>
   {#if !$page.data.user}
-    <a href="/login">Login</a>
+    <a class="link" href="/login">Login</a>
     <a href="/register">Register</a>
   {/if}
 
