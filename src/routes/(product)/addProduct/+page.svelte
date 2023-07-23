@@ -4,10 +4,17 @@
   import type { ActionData } from "./$types";
 
   export let form: ActionData;
+  import countries from "$lib/data/countries.json";
+  let selected: string = "-Select Country";
+
+  // let countryCodes = [];
+  // for (let i = 0; i < countries.length; i++) {
+  //   console.log(countries[i]["name"]["common"]);
+  //   console.log(countries[i]["cca2"]);
+  // }
 
   console.log("in form page");
   let productName = "";
-  // $: details = { name: productName, links: values };
 
   let values = [
     {
@@ -21,18 +28,6 @@
   const removeLinks = () => {
     values = values.slice(0, values.length - 1);
   };
-
-  let submit;
-  function handleSubmit() {
-    // Send a POST request to src/routes/contact/+server.ts endpoint
-    submit = fetch("/addProduct", {
-      method: "POST",
-      body: JSON.stringify({ foo: "product details" }),
-      headers: { "content-type": "application/json" },
-    })
-      .then((resp) => resp.json())
-      .finally(() => setTimeout(() => (submit = null), 5000));
-  }
 </script>
 
 <h1>Add Product</h1>
@@ -54,13 +49,26 @@
       <div class="link">
         <div>
           <label for="country">Country</label>
-          <input
+          <!-- <input
             id="country"
             name="country"
             type="text"
             bind:value={values[i].country}
             required
-          />
+          /> -->
+          <select
+            value={selected}
+            name="country"
+            id="country"
+            on:select={() => (values[i]["country"] = selected)}
+          >
+            <option disabled value="">-Select country-</option>
+            {#each countries as country, index}
+              <option value={country["cca2"]}>
+                {country["name"]["common"]}
+              </option>
+            {/each}
+          </select>
         </div>
         <div>
           <label for="url">URL</label>
