@@ -7,12 +7,6 @@
   import countries from "$lib/data/countries.json";
   let selected: string = "-Select Country";
 
-  // let countryCodes = [];
-  // for (let i = 0; i < countries.length; i++) {
-  //   console.log(countries[i]["name"]["common"]);
-  //   console.log(countries[i]["cca2"]);
-  // }
-
   console.log("in form page");
   let productName = "";
 
@@ -23,6 +17,7 @@
     },
   ];
   const addLinks = () => {
+    console.log("add links function");
     values = [...values, { country: "", url: "" }];
   };
   const removeLinks = () => {
@@ -55,13 +50,6 @@
               <div class="grid grid-cols-2 gap-2">
                 <div>
                   <label class="label" for="country">Country</label>
-                  <!-- <input
-              id="country"
-              name="country"
-              type="text"
-              bind:value={values[i].country}
-              required
-            /> -->
                   <select
                     class="select select-bordered w-full max-w-xs"
                     value={selected}
@@ -101,12 +89,13 @@
               <button class="btn btn-info" on:click|preventDefault={addLinks}
                 >Add</button
               >
+
               {#if values.length >= 2}
                 <button
                   class="btn btn-error"
                   type="button"
                   value="Remove"
-                  on:click|preventDefault={removeLinks}>Remove</button
+                  on:click={removeLinks}>Remove</button
                 >
               {/if}
             </div>

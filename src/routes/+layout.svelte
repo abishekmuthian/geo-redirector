@@ -1,6 +1,7 @@
 <script lang="ts">
   import "../app.css";
   import { page } from "$app/stores";
+  import { enhance } from "$app/forms";
 </script>
 
 <svelte:head>
@@ -32,13 +33,12 @@
     </div>
     <div id="burger" class="px-4 cursor-pointer md:hidden">
       <svg
-        class="w-6"
+        class="w-6 h-6"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-6 h-6"
       >
         <path
           strokeLinecap="round"
