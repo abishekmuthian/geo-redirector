@@ -91,32 +91,32 @@
               </div>
             </div>
           {/each}
-          <div class="add-remove-links grid-flow-col auto-cols-max gap-2">
-            <div>
-              <button
-                class="btn btn-accent float-left"
-                on:click|preventDefault={addLinks}>Add</button
-              >
-            </div>
-            {#if values.length >= 2}
-              <div>
-                <button
-                  class="btn btn-accent float-left"
-                  type="button"
-                  value="Remove"
-                  on:click|preventDefault={removeLinks}>Remove</button
-                >
-              </div>
-            {/if}
-          </div>
-
           {#if form?.product}
             <p class="error">
               Product is already in database. Please add the new product.
             </p>
           {/if}
+          <div class="add-remove-links mt-4">
+            <div class="float-left">
+              <button class="btn btn-info" on:click|preventDefault={addLinks}
+                >Add</button
+              >
+              {#if values.length >= 2}
+                <button
+                  class="btn btn-error"
+                  type="button"
+                  value="Remove"
+                  on:click|preventDefault={removeLinks}>Remove</button
+                >
+              {/if}
+            </div>
 
-          <button type="submit">Add Product</button>
+            <div>
+              <button class="btn btn-primary float-right" type="submit"
+                >Add Product</button
+              >
+            </div>
+          </div>
         </div>
       </form>
     </div>

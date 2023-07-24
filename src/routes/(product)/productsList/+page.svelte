@@ -11,7 +11,7 @@
 
 <div class="flex items-center justify-center p-12">
   <div class="mx-auto w-full lg:max-w-[680px] max-w-xl">
-    <div class="overflow-x-auto">
+    <div>
       <h1 class="text-4xl font-medium mb-5">Products</h1>
       <table class="table">
         <thead>

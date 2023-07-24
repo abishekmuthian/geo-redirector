@@ -37,97 +37,95 @@
   };
 </script>
 
-<h1>Edit Product</h1>
+<div class="flex items-center justify-center p-12">
+  <div class="mx-auto w-full lg:max-w-[680px] max-w-xl">
+    <div class="overflow-x-auto">
+      <h1 class="text-4xl font-medium mb-5">Edit Product</h1>
 
-<form
-  method="POST"
-  use:enhance
-  enctype="multipart/form-data"
-  on:submit={(e) => (submitting = true)}
->
-  <div>
-    <label for="productname">Product Name</label>
-    <input
-      id="productname"
-      name="productname"
-      type="text"
-      bind:value={productName}
-      required
-    />
-  </div>
-
-  <div class="links">
-    {#each values as v, i}
-      <div class="link">
+      <form
+        method="POST"
+        use:enhance
+        enctype="multipart/form-data"
+        on:submit={(e) => (submitting = true)}
+      >
         <div>
-          <label for="country">Country</label>
-          <select name="country" id="country">
-            {#if !values[i]["country"]}
-              <option disabled value="" selected>-Select country-</option>
-              {#each countries as country, index}
-                <option value={country["cca2"]}>
-                  {country["name"]["common"]}
-                </option>
-              {/each}
-            {:else}
-              {#each countries as country, index}
-                {#if country["cca2"] === values[i].country}
-                  <option value={country["cca2"]} selected>
-                    {country["name"]["common"]}
-                  </option>
-                {:else}
-                  <option value={country["cca2"]}>
-                    {country["name"]["common"]}
-                  </option>
-                {/if}
-              {/each}
-            {/if}
-          </select>
-        </div>
-        <div>
-          <label for="url">URL</label>
+          <label for="productname">Product Name</label>
           <input
-            id="url"
-            name="url"
+            class="input input-bordered w-full max-w-2xl"
+            id="productname"
+            name="productname"
             type="text"
-            bind:value={values[i].url}
+            bind:value={productName}
             required
           />
         </div>
-      </div>
-    {/each}
-    <div class="add-remove-links">
-      <div>
-        <button on:click|preventDefault={addLinks}>Add</button>
-      </div>
-      {#if values.length >= 2}
-        <div>
-          <input type="button" value="Remove" on:click={removeLinks} />
+
+        <div class="links">
+          {#each values as v, i}
+            <div class="link grid grid-cols-2 gap-2">
+              <div>
+                <label for="country">Country</label>
+                <select
+                  class="select select-bordered w-full max-w-xs"
+                  name="country"
+                  id="country"
+                >
+                  {#if !values[i]["country"]}
+                    <option disabled value="" selected>-Select country-</option>
+                    {#each countries as country, index}
+                      <option value={country["cca2"]}>
+                        {country["name"]["common"]}
+                      </option>
+                    {/each}
+                  {:else}
+                    {#each countries as country, index}
+                      {#if country["cca2"] === values[i].country}
+                        <option value={country["cca2"]} selected>
+                          {country["name"]["common"]}
+                        </option>
+                      {:else}
+                        <option value={country["cca2"]}>
+                          {country["name"]["common"]}
+                        </option>
+                      {/if}
+                    {/each}
+                  {/if}
+                </select>
+              </div>
+              <div>
+                <label for="url">URL</label>
+                <input
+                  class="input input-bordered w-full max-w-xs"
+                  id="url"
+                  name="url"
+                  type="text"
+                  bind:value={values[i].url}
+                  required
+                />
+              </div>
+            </div>
+          {/each}
+          <div class="add-remove-links mt-4">
+            <div class="float-left">
+              <button class="btn btn-info" on:click|preventDefault={addLinks}
+                >Add</button
+              >
+              {#if values.length >= 2}
+                <button
+                  class="btn btn-error"
+                  type="button"
+                  value="Remove"
+                  on:click={removeLinks}>Remove</button
+                >
+              {/if}
+            </div>
+
+            <button class="btn btn-primary float-right" type="submit"
+              >Save Product</button
+            >
+          </div>
         </div>
-      {/if}
+      </form>
     </div>
-
-    <button type="submit">Save Product</button>
   </div>
-</form>
-
-<style>
-  .link {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .add-remove-links {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-  form {
-    margin: 5px;
-  }
-
-  div {
-    margin-bottom: 5px;
-    gap: 10px;
-  }
-</style>
+</div>
