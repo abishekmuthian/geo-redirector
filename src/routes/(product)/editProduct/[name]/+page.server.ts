@@ -1,11 +1,10 @@
 import type { PageServerLoad } from "./$types";
 import { db } from "$lib/database";
-// edit
+
 import { fail, redirect, type RequestHandler } from "@sveltejs/kit";
 import type { Action, Actions } from "./$types";
 import { Prisma } from "@prisma/client";
 
-//
 export const load: PageServerLoad = async ({ params: { name }, locals }) => {
   if (locals.user) {
     console.log("username in edit product page server: ", locals.user);
@@ -33,7 +32,6 @@ export const load: PageServerLoad = async ({ params: { name }, locals }) => {
   };
 };
 
-// edit Product - save it in the database
 function buildLinksArray(arr = []) {
   let output = [];
   let country = "";
@@ -51,13 +49,8 @@ function buildLinksArray(arr = []) {
 export const actions = {
   default: async ({ request, locals, params }) => {
     const data = await request.formData();
-
     const vals: any = [...data.values()];
-
     let inputLinks = buildLinksArray(vals);
-    // console.log(inputLinks);
-
-    // console.log("edit vals: ", [...data.values()]);
 
     const productname = data.get("productname");
 
@@ -81,7 +74,7 @@ export const actions = {
     if (product) {
       console.log("product fetched for update");
     }
-    // console.log("record create");
+
     try {
       const result = await db.product.update({
         where: {
@@ -101,21 +94,14 @@ export const actions = {
       });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
-        // The .code property can be accessed in a type-safe manner
         if (e.code === "P2002") {
-          console.log(
-            "There is a unique constraint violation, a new user cannot be created with this email"
-          );
+          console.log("Edit error: Duplicate country is not allowed.");
           return fail(400, { duplicateCountry: true });
         }
       }
       throw e;
     }
 
-    // console.log("edit result: ", result);
-
     throw redirect(303, "/productsList");
-
-    // throw redirect(303, `/editProduct/${params.name}`);
   },
 };

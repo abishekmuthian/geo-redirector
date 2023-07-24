@@ -25,7 +25,7 @@ export const load = (async ({ params: { name }, locals }) => {
       },
     },
   });
-  console.log("delete product:::", deleteProduct);
+  // console.log("delete product:::", deleteProduct);
   const removedLinks = await db.product.update({
     where: {
       id: deleteProduct?.id,
@@ -39,7 +39,7 @@ export const load = (async ({ params: { name }, locals }) => {
       links: true,
     },
   });
-  console.log("removedLinks ", removedLinks);
+  // console.log("removedLinks ", removedLinks);
 
   const deletedProduct = await db.product.delete({
     where: {
