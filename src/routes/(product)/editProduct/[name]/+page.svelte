@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { applyAction, enhance } from "$app/forms";
-  import { invalidateAll } from "$app/navigation";
+  import { enhance } from "$app/forms";
 
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
@@ -107,12 +106,12 @@
           {/each}
           <div class="add-remove-links mt-4">
             <div class="float-left">
-              <button class="btn btn-info" on:click|preventDefault={addLinks}
+              <button class="btn btn-accent" on:click|preventDefault={addLinks}
                 >Add</button
               >
               {#if values.length >= 2}
                 <button
-                  class="btn btn-error"
+                  class="btn btn-neutral"
                   type="button"
                   value="Remove"
                   on:click={removeLinks}>Remove</button

@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { applyAction, enhance } from "$app/forms";
-  import { invalidateAll } from "$app/navigation";
+  import { enhance } from "$app/forms";
   import type { ActionData } from "./$types";
 
   export let form: ActionData;
@@ -35,7 +34,7 @@
     <div class="overflow-x-auto">
       <h1 class="text-4xl font-medium mb-5">Add Product</h1>
 
-      <form action="?/addProduct" method="POST">
+      <form action="?/addProduct" method="POST" use:enhance>
         <div>
           <label for="productname">Product Name</label>
           <input
@@ -98,12 +97,12 @@
           {/if}
           <div class="add-remove-links mt-4">
             <div class="float-left">
-              <button class="btn btn-info" on:click|preventDefault={addLinks}
+              <button class="btn btn-accent" on:click|preventDefault={addLinks}
                 >Add</button
               >
               {#if values.length >= 2}
                 <button
-                  class="btn btn-error"
+                  class="btn btn-neutral"
                   type="button"
                   value="Remove"
                   on:click|preventDefault={removeLinks}>Remove</button

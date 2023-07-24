@@ -1,6 +1,5 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
-  import { invalidateAll } from "$app/navigation";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
 
@@ -11,7 +10,7 @@
 
 <div class="flex items-center justify-center p-12">
   <div class="mx-auto w-full lg:max-w-[680px] max-w-xl">
-    <div>
+    <div class="overflow-x-auto">
       <h1 class="text-4xl font-medium mb-5">Products</h1>
       <table class="table">
         <thead>
@@ -29,10 +28,10 @@
                 localhost.com/product/{`${encodeURI(item.name)}`}
               </td>
               <td>
-                <button class="btn btn-info">
+                <button class="btn btn-accent">
                   <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
                 </button>
-                <button class="btn btn-error">
+                <button class="btn btn-neutral">
                   <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
                   >
                 </button>
