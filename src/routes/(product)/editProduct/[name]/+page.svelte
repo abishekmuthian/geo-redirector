@@ -57,6 +57,7 @@
             type="text"
             bind:value={productName}
             required
+            readonly
           />
         </div>
 

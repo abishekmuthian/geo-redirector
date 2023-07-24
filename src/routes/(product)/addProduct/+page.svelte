@@ -84,6 +84,10 @@
               Product is already in database. Please add the new product.
             </p>
           {/if}
+          {#if form?.duplicateCountry}
+            <p class="error">Country should be unique!</p>
+          {/if}
+
           <div class="add-remove-links mt-4">
             <div class="float-left">
               <button class="btn btn-info" on:click|preventDefault={addLinks}

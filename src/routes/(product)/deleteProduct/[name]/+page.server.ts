@@ -5,9 +5,14 @@ import type { Action, Actions } from "./$types";
 import type Page from "../../../+page.svelte";
 
 //
-export const load = (async ({ params: { name } }) => {
+export const load = (async ({ params: { name }, locals }) => {
   const deleteProduct = await db.product.findUnique({
-    where: { name: name },
+    where: {
+      name_owner: {
+        name: name,
+        owner: locals.user.name,
+      },
+    },
     select: {
       id: true,
       name: true,
