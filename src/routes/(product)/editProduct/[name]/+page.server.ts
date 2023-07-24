@@ -1,13 +1,21 @@
 import type { PageServerLoad } from "./$types";
 import { db } from "$lib/database";
-// edit
+
 import { fail, redirect, type RequestHandler } from "@sveltejs/kit";
 import type { Action, Actions } from "./$types";
+import { Prisma } from "@prisma/client";
 
-//
-export const load: PageServerLoad = async ({ params: { name } }) => {
+export const load: PageServerLoad = async ({ params: { name }, locals }) => {
+  if (locals.user) {
+    console.log("username in edit product page server: ", locals.user);
+  }
   const editProduct = await db.product.findUnique({
-    where: { name: name },
+    where: {
+      name_owner: {
+        name: name,
+        owner: locals.user.name,
+      },
+    },
     select: {
       name: true,
       links: {
@@ -24,7 +32,6 @@ export const load: PageServerLoad = async ({ params: { name } }) => {
   };
 };
 
-// edit Product - save it in the database
 function buildLinksArray(arr = []) {
   let output = [];
   let country = "";
@@ -42,13 +49,8 @@ function buildLinksArray(arr = []) {
 export const actions = {
   default: async ({ request, locals, params }) => {
     const data = await request.formData();
-
-    const vals = [...data.values()];
-
+    const vals: any = [...data.values()];
     let inputLinks = buildLinksArray(vals);
-    // console.log(inputLinks);
-
-    // console.log("edit vals: ", [...data.values()]);
 
     const productname = data.get("productname");
 
@@ -62,32 +64,44 @@ export const actions = {
       }
     }
     const product = await db.product.findUnique({
-      where: { name: productname },
+      where: {
+        name_owner: {
+          name: productname,
+          owner: locals.user.name,
+        },
+      },
     });
     if (product) {
       console.log("product fetched for update");
     }
-    // console.log("record create");
-    const result = await db.product.update({
-      where: {
-        id: product?.id,
-      },
-      data: {
-        name: productname,
 
-        links: {
-          deleteMany: {},
-          create: inputLinks,
+    try {
+      const result = await db.product.update({
+        where: {
+          id: product?.id,
         },
-      },
-      include: {
-        links: true,
-      },
-    });
-    // console.log("edit result: ", result);
+        data: {
+          name: productname,
+
+          links: {
+            deleteMany: {},
+            create: inputLinks,
+          },
+        },
+        include: {
+          links: true,
+        },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          console.log("Edit error: Duplicate country is not allowed.");
+          return fail(400, { duplicateCountry: true });
+        }
+      }
+      throw e;
+    }
 
     throw redirect(303, "/productsList");
-
-    // throw redirect(303, `/editProduct/${params.name}`);
   },
 };

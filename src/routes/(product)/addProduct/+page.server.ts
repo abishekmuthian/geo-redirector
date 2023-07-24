@@ -1,6 +1,16 @@
 import { fail, redirect, type RequestHandler } from "@sveltejs/kit";
 import type { Action, Actions, PageServerLoad } from "./$types";
 import { db } from "$lib/database";
+import { Prisma } from "@prisma/client";
+
+let localUserName: string = "";
+
+export const load: PageServerLoad = async ({ locals }) => {
+  if (locals.user) {
+    localUserName = locals.user.name;
+    console.log("username in add product page server: ", locals.user);
+  }
+};
 
 function buildLinksArray(arr = []) {
   let output = [];
@@ -19,7 +29,7 @@ function buildLinksArray(arr = []) {
 const addProduct: Action = async ({ request }) => {
   const data = await request.formData();
 
-  const vals = [...data.values()];
+  const vals: any = [...data.values()];
 
   let inputLinks = buildLinksArray(vals);
   console.log(inputLinks);
@@ -41,29 +51,50 @@ const addProduct: Action = async ({ request }) => {
   }
 
   const product = await db.product.findUnique({
-    where: { name: productname },
+    where: {
+      name_owner: {
+        name: productname,
+        owner: localUserName,
+      },
+    },
   });
 
   if (product) {
     return fail(400, { product: true });
   }
 
-  const products = await db.product.findMany();
+  console.log("product in add: ", product);
+
+  let newProduct = {
+    name: productname,
+    links: inputLinks,
+  };
 
   console.log("record create");
-  const result = await db.product.create({
-    data: {
-      name: productname,
 
-      links: {
-        create: inputLinks,
+  try {
+    const result = await db.product.create({
+      data: {
+        name: productname,
+        owner: localUserName,
+
+        links: {
+          create: inputLinks,
+        },
       },
-    },
-    include: {
-      links: true,
-    },
-  });
-  console.log(result);
+      include: {
+        links: true,
+      },
+    });
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        console.log("Duplicate countries are not allowed");
+        return fail(400, { duplicateCountry: true });
+      }
+    }
+    throw e;
+  }
 
   throw redirect(303, "/productsList");
 };

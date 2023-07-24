@@ -6,6 +6,7 @@
   export let data: PageData;
 
   let fetchedData = data.page_server_data.productRows;
+  console.log("page.data.user: ", data.user);
 </script>
 
 <div class="flex items-center justify-center p-12">

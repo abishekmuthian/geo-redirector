@@ -6,6 +6,7 @@
   import countries from "$lib/data/countries.json";
 
   export let data: PageData;
+
   let submitting;
 
   let fetchedData = data.page_server_data.productRow;
@@ -56,6 +57,7 @@
             type="text"
             bind:value={productName}
             required
+            readonly
           />
         </div>
 

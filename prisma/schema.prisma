@@ -24,19 +24,22 @@ model User {
 
 enum Role {
   USER
-  ADMIN
+  ADMIN 
 }
 
 model Product {
   id     Int    @id @default(autoincrement())
-  name   String @unique
+  name   String 
   links  Link[]
+  owner  String
+  @@unique([name, owner])
 }
 
 model Link {
   id      Int       @id @default(autoincrement())
-  country String    @unique
+  country String    
   url     String
   product Product @relation(fields: [productId], references: [id])
   productId Int
+  @@unique([country, productId])
 }

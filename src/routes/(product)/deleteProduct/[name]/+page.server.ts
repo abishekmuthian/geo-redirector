@@ -5,9 +5,14 @@ import type { Action, Actions } from "./$types";
 import type Page from "../../../+page.svelte";
 
 //
-export const load = (async ({ params: { name } }) => {
+export const load = (async ({ params: { name }, locals }) => {
   const deleteProduct = await db.product.findUnique({
-    where: { name: name },
+    where: {
+      name_owner: {
+        name: name,
+        owner: locals.user.name,
+      },
+    },
     select: {
       id: true,
       name: true,
@@ -20,7 +25,7 @@ export const load = (async ({ params: { name } }) => {
       },
     },
   });
-  console.log("delete product:::", deleteProduct);
+  // console.log("delete product:::", deleteProduct);
   const removedLinks = await db.product.update({
     where: {
       id: deleteProduct?.id,
@@ -34,7 +39,7 @@ export const load = (async ({ params: { name } }) => {
       links: true,
     },
   });
-  console.log("removedLinks ", removedLinks);
+  // console.log("removedLinks ", removedLinks);
 
   const deletedProduct = await db.product.delete({
     where: {
