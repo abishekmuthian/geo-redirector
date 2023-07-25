@@ -48,5 +48,5 @@ export const load = (async ({ params: { name }, locals }) => {
   });
   console.log("Deleted Product ", deletedProduct);
 
-  throw redirect(303, "/productsList");
+  throw redirect(302, "/productsList");
 }) satisfies PageServerLoad;

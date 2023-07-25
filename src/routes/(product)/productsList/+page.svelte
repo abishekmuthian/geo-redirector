@@ -25,8 +25,8 @@
           {#each fetchedData as item, index}
             <tr>
               <td>{item.name}</td>
-              <td>
-                localhost.com/product/{`${encodeURI(item.name)}`}
+              <td class="link">
+                https://localhost.com/product/{`${encodeURI(item.name)}`}
               </td>
               <td>
                 <a

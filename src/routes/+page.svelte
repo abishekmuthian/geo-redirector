@@ -4,7 +4,7 @@
 
   export let form: ActionData;
   // export let registerFlag = process.env.REGISTER;
-  export let registerFlag = "";
+  export let registerFlag = false;
 
   console.log("Register flag is:", registerFlag);
 </script>
@@ -17,7 +17,7 @@
     </div>
     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
       <div class="card-body">
-        {#if !(registerFlag === "on")}
+        {#if !registerFlag}
           <form action="?/login" method="POST" use:enhance>
             <div class="form-control">
               <label class="label">
@@ -82,6 +82,13 @@
                 <span>You have entered the wrong credentials.</span>
               </div>
             {/if}
+            <span
+              >Click <a
+                data-sveltekit-preload-data="tap"
+                on:click={() => (registerFlag = !registerFlag)}>here</a
+              >
+              to register.</span
+            >
             <div class="form-control mt-6">
               <button class="btn btn-primary" type="submit">Login</button>
             </div>
@@ -133,6 +140,13 @@
                 <span>Username is taken.</span>
               </div>
             {/if}
+            <span
+              >Click <a
+                data-sveltekit-preload-data="tap"
+                on:click={() => (registerFlag = !registerFlag)}>here</a
+              >
+              to login.</span
+            >
             <div class="form-control mt-6">
               <button class="btn btn-primary" type="submit">Register</button>
             </div>
