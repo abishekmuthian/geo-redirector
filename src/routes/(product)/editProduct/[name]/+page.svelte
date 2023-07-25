@@ -15,11 +15,11 @@
   let linksArr = fetchedData?.links;
   let selected: string = "-Select Country-";
 
-  let countryCodes = [];
+  let countryCodes: any = {};
   let key: string;
   for (let i = 0; i < countries.length; i++) {
-    let key = countries[i]["cca2"];
-    countryCodes.push({ [key]: countries[i]["name"]["common"] });
+    let key: any = countries[i]["cca2"];
+    countryCodes[key] = countries[i]["name"]["common"];
   }
 
   let values: { country: string; url: string }[] = [];
@@ -28,7 +28,7 @@
       values.push(fetchedData?.links[i]);
     }
   }
-  console.log("values:0 ", values[0]);
+  // console.log("values:0 ", values[0]);
 
   const addLinks = () => {
     values = [...values, { country: "", url: "" }];
@@ -36,6 +36,29 @@
   const removeLinks = () => {
     values = values.slice(0, values.length - 1);
   };
+
+  // duplicate countries logic
+  function countryCount(arr: { country: string; url: string }[]) {
+    let obj: any = {};
+    let duplicateCountries = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (obj[arr[i]["country"]]) {
+        obj[arr[i]["country"]] += 1;
+      } else {
+        obj[arr[i]["country"]] = 1;
+      }
+    }
+
+    for (let key in obj) {
+      if (obj[key] > 1 && key) {
+        duplicateCountries.push(key);
+      }
+    }
+
+    return duplicateCountries;
+  }
+  //
+  $: duplicates = countryCount(values);
 </script>
 
 <div class="flex items-center justify-center p-12">
@@ -71,6 +94,7 @@
                   class="select select-bordered w-full max-w-xs"
                   name="country"
                   id="country"
+                  bind:value={values[i]["country"]}
                 >
                   {#if !values[i]["country"]}
                     <option disabled value="" selected>-Select country-</option>
@@ -109,9 +133,17 @@
           {/each}
           <div class="add-remove-links mt-4">
             <div class="float-left">
-              <button class="btn btn-info" on:click|preventDefault={addLinks}
-                >Add</button
-              >
+              {#if duplicates.length > 0}
+                <button
+                  disabled
+                  class="btn btn-info"
+                  on:click|preventDefault={addLinks}>Add</button
+                >
+              {:else}
+                <button class="btn btn-info" on:click|preventDefault={addLinks}
+                  >Add</button
+                >
+              {/if}
               {#if values.length >= 2}
                 <button
                   class="btn btn-error"
@@ -121,13 +153,24 @@
                 >
               {/if}
             </div>
-
-            <button class="btn btn-primary float-right" type="submit"
-              >Save Product</button
-            >
+            {#if duplicates.length > 0}
+              <button disabled class="btn btn-primary float-right" type="submit"
+                >Save Product</button
+              >
+            {:else}
+              <button class="btn btn-primary float-right" type="submit"
+                >Save Product</button
+              >
+            {/if}
           </div>
         </div>
       </form>
+      {#if duplicates.length > 0}
+        <h1>
+          Duplicate country - {countryCodes[duplicates[0]]}
+        </h1>
+      {:else}{""}
+      {/if}
     </div>
   </div>
 </div>

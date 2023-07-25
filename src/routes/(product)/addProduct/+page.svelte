@@ -5,9 +5,7 @@
 
   export let form: ActionData;
   import countries from "$lib/data/countries.json";
-  let selected: string = "-Select Country";
 
-  console.log("in form page");
   let productName = "";
 
   let values = [
@@ -16,6 +14,7 @@
       url: "",
     },
   ];
+
   const addLinks = () => {
     console.log("add links function");
     values = [...values, { country: "", url: "" }];
@@ -23,6 +22,35 @@
   const removeLinks = () => {
     values = values.slice(0, values.length - 1);
   };
+
+  function countryCount(arr: { country: string; url: string }[]) {
+    let obj: any = {};
+    let duplicateCountries = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (obj[arr[i]["country"]]) {
+        obj[arr[i]["country"]] += 1;
+      } else {
+        obj[arr[i]["country"]] = 1;
+      }
+    }
+
+    for (let key in obj) {
+      if (obj[key] > 1 && key) {
+        duplicateCountries.push(key);
+      }
+    }
+
+    return duplicateCountries;
+  }
+  //
+  $: duplicates = countryCount(values);
+
+  let countryCodes: any = {};
+  let key: string;
+  for (let i = 0; i < countries.length; i++) {
+    let key: any = countries[i]["cca2"];
+    countryCodes[key] = countries[i]["name"]["common"];
+  }
 </script>
 
 <div class="flex items-center justify-center p-12">
@@ -52,10 +80,9 @@
                   <label class="label" for="country">Country</label>
                   <select
                     class="select select-bordered w-full max-w-xs"
-                    value={selected}
+                    bind:value={values[i]["country"]}
                     name="country"
                     id="country"
-                    on:select={() => (values[i]["country"] = selected)}
                   >
                     <option disabled value="">-Select country-</option>
                     {#each countries as country, index}
@@ -90,9 +117,17 @@
 
           <div class="add-remove-links mt-4">
             <div class="float-left">
-              <button class="btn btn-info" on:click|preventDefault={addLinks}
-                >Add</button
-              >
+              {#if duplicates.length > 0}
+                <button
+                  disabled
+                  class="btn btn-info"
+                  on:click|preventDefault={addLinks}>Add</button
+                >
+              {:else}
+                <button class="btn btn-info" on:click|preventDefault={addLinks}
+                  >Add</button
+                >
+              {/if}
 
               {#if values.length >= 2}
                 <button
@@ -105,13 +140,27 @@
             </div>
 
             <div>
-              <button class="btn btn-primary float-right" type="submit"
-                >Add Product</button
-              >
+              {#if duplicates.length > 0}
+                <button
+                  disabled
+                  class="btn btn-primary float-right"
+                  type="submit">Add Product</button
+                >
+              {:else}
+                <button class="btn btn-primary float-right" type="submit"
+                  >Add Product</button
+                >
+              {/if}
             </div>
           </div>
         </div>
       </form>
+      {#if duplicates.length > 0}
+        <h1>
+          Duplicate country - {countryCodes[duplicates[0]]}
+        </h1>
+      {:else}{""}
+      {/if}
     </div>
   </div>
 </div>
