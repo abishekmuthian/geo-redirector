@@ -3,7 +3,9 @@
   import { enhance } from "$app/forms";
 
   export let form: ActionData;
-  export let registerFlag = process.env.REGISTER;
+  // export let registerFlag = process.env.REGISTER;
+  export let registerFlag = "";
+
   console.log("Register flag is:", registerFlag);
 </script>
 
@@ -39,7 +41,8 @@
                 class="input input-bordered"
               />
               <!--           <label class="label">
-              <a href="#" class="label-text-alt link link-hover"
+              <a                     data-sveltekit-preload-data="tap"
+ href="#" class="label-text-alt link link-hover"
                 >Forgot password?</a
               >
             </label> -->
@@ -107,7 +110,8 @@
                 class="input input-bordered"
               />
               <!--           <label class="label">
-              <a href="#" class="label-text-alt link link-hover"
+              <a                     data-sveltekit-preload-data="tap"
+ href="#" class="label-text-alt link link-hover"
                 >Forgot password?</a
               >
             </label> -->

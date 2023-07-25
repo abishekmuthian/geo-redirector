@@ -29,13 +29,16 @@
                 localhost.com/product/{`${encodeURI(item.name)}`}
               </td>
               <td>
-                <button class="btn btn-accent">
-                  <a href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a>
-                </button>
-                <button class="btn btn-neutral">
-                  <a href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
-                  >
-                </button>
+                <a
+                  class="btn btn-accent"
+                  data-sveltekit-preload-data="tap"
+                  href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
+                >
+                <a
+                  class="btn btn-neutral"
+                  data-sveltekit-preload-data="tap"
+                  href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
+                >
               </td>
             </tr>
           {/each}
@@ -44,9 +47,11 @@
     </div>
     <div class="text-right mt-2">
       {#if $page.data.user}
-        <button class="btn btn-primary">
-          <a href="/addProduct">Add Products</a>
-        </button>
+        <a
+          class="btn btn-primary"
+          data-sveltekit-preload-data="tap"
+          href="/addProduct">Add Products</a
+        >
       {/if}
     </div>
   </div>

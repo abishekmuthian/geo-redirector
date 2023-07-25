@@ -10,6 +10,7 @@ enum Roles {
 }
 
 export const load: PageServerLoad = async ({ locals }) => {
+  console.log("Home page loaded");
   // redirect user if logged in
   if (locals.user) {
     throw redirect(302, "/productsList");
@@ -56,8 +57,9 @@ const login: Action = async ({ cookies, request }) => {
     maxAge: 60 * 60 * 24 * 30,
   });
 
-  throw redirect(302, "/productsList");
   console.log("Redirecting after login");
+
+  throw redirect(302, "/productsList");
 };
 
 const register: Action = async ({ request }) => {
@@ -90,6 +92,8 @@ const register: Action = async ({ request }) => {
       role: Roles.USER,
     },
   });
+
+  console.log("Redirecting after registration");
 
   throw redirect(303, "/");
 };
