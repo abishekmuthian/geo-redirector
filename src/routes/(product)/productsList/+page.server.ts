@@ -15,6 +15,7 @@ export const load: PageServerLoad = async ({ locals }) => {
       owner: locals.user.name,
     },
     select: {
+      id: true,
       name: true,
       links: {
         select: {

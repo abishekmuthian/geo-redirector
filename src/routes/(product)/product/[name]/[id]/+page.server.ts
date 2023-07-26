@@ -6,6 +6,8 @@ console.log("product/productname");
 export const load = (async ({ params, locals }) => {
   console.log("Product name: ", params.name);
   console.log("Product id: ", params.id);
+  let productId = parseInt(params.id);
+  console.log(typeof productId, productId);
   // Get the country here
 
   console.log("Country in the product server: ", locals.country);
@@ -14,10 +16,7 @@ export const load = (async ({ params, locals }) => {
   //added
   const getProduct = await db.product.findUnique({
     where: {
-      name_owner: {
-        name: params.name,
-        owner: locals.user.name,
-      },
+      id: parseInt(params.id),
     },
     select: {
       name: true,
@@ -32,6 +31,7 @@ export const load = (async ({ params, locals }) => {
       },
     },
   });
+  console.log("get product:::", getProduct);
   console.log("Required country URL", getProduct?.links[0]["url"]);
 
   const productURL = getProduct?.links[0]["url"] || "/";
