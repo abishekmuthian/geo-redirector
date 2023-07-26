@@ -94,6 +94,7 @@
                   name="country"
                   id="country"
                   bind:value={values[i]["country"]}
+                  required
                 >
                   {#if !values[i]["country"]}
                     <option disabled value="" selected>-Select country-</option>

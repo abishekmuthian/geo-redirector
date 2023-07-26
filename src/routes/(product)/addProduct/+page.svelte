@@ -82,6 +82,7 @@
                     bind:value={values[i]["country"]}
                     name="country"
                     id="country"
+                    required
                   >
                     <option disabled value="">-Select country-</option>
                     {#each countries as country, index}
