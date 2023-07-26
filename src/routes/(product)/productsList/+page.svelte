@@ -60,8 +60,8 @@
                 <td>
                   <a
                     class="link"
-                    href="{`${siteUrl}`}/{`${encodeURI(item.name)}`}"
-                    >{`${siteUrl}`}/{`${encodeURI(item.name)}`}</a
+                    href="{`${siteUrl}`}/product/{`${encodeURI(item.name)}`}"
+                    >{`${siteUrl}`}/product/{`${encodeURI(item.name)}`}</a
                   >
                 </td>
                 <td>
