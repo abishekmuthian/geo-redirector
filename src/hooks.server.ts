@@ -3,7 +3,7 @@ import { db } from "$lib/database";
 
 export const handle: Handle = async ({ event, resolve }) => {
   // Get the ip from the headers
-  // console.log("headers: ", event.request.headers);
+  console.log("headers: ", event.request.headers);
 
   console.log(
     "Country in hooks: ",
