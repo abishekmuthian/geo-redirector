@@ -1,10 +1,11 @@
 import { redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad } from "../$types";
 import { db } from "$lib/database";
 
 console.log("product/productname");
 export const load = (async ({ params, locals }) => {
   console.log("Product name: ", params.name);
+  console.log("Product id: ", params.id);
   // Get the country here
 
   console.log("Country in the product server: ", locals.country);
@@ -12,7 +13,12 @@ export const load = (async ({ params, locals }) => {
   // Get the product url for the country using name and country code from the db
   //added
   const getProduct = await db.product.findUnique({
-    where: { name: params.name },
+    where: {
+      name_owner: {
+        name: params.name,
+        owner: locals.user.name,
+      },
+    },
     select: {
       name: true,
       links: {
