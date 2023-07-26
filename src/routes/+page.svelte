@@ -1,10 +1,23 @@
 <script lang="ts">
-  import type { ActionData } from "./$types";
-  import { enhance } from "$app/forms";
+  import type { ActionData, PageData } from "./$types";
+  import { applyAction, enhance } from "$app/forms";
+  import { goto, invalidate, invalidateAll } from "$app/navigation";
 
   export let form: ActionData;
-  // export let registerFlag = process.env.REGISTER;
+
+  export let data: PageData;
+
+  export let registrationSuccess = false;
+
   export let registerFlag = false;
+
+  $: registrationSuccess = form?.registrationSuccess;
+
+  $: registerFlag = data.registerFlag;
+
+  console.log("Page Data: ", data);
+
+  console.log("RegistrationSuccess is:", registrationSuccess);
 
   console.log("Register flag is:", registerFlag);
 </script>
@@ -49,46 +62,34 @@
             </div>
             {#if form?.invalid}
               <div class="alert alert-error mt-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="stroke-current shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  /></svg
-                >
                 <span>Username and password is required.</span>
               </div>
             {/if}
 
             {#if form?.credentials}
               <div class="alert alert-error mt-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="stroke-current shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  /></svg
-                >
                 <span>You have entered the wrong credentials.</span>
               </div>
             {/if}
-            <span
-              >Click <a
-                data-sveltekit-preload-data="tap"
-                on:click={() => (registerFlag = !registerFlag)}>here</a
-              >
-              to register.</span
-            >
+            {#if registrationSuccess}
+              <div class="alert alert-info mt-4">
+                <span
+                  >Registration successful, Login with your credentials.</span
+                >
+              </div>
+            {:else}
+              <div class="mt-4">
+                <span
+                  >Click <a
+                    class="link"
+                    data-sveltekit-preload-data="tap"
+                    on:click={() => (registerFlag = !registerFlag)}
+                    href="">here</a
+                  >
+                  to register.</span
+                >
+              </div>
+            {/if}
             <div class="form-control mt-6">
               <button class="btn btn-primary" type="submit">Login</button>
             </div>
@@ -125,28 +126,31 @@
             </div>
             {#if form?.user}
               <div class="alert alert-error mt-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="stroke-current shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  /></svg
-                >
                 <span>Username is taken.</span>
               </div>
             {/if}
-            <span
-              >Click <a
-                data-sveltekit-preload-data="tap"
-                on:click={() => (registerFlag = !registerFlag)}>here</a
+            {#if form?.registrationSuccess}
+              <div class="toast">
+                <div class="alert alert-info">
+                  <span>New message arrived.</span>
+                </div>
+              </div>
+              <!-- <p>Successful registration! Redirecting to login.</p> -->
+              <!-- {() => (registerFlag = form?.registerFlag)}
+              {@debug registerFlag} -->
+              <!-- {goto("/")} -->
+            {/if}
+            <div class="mt-4">
+              <span
+                >Click <a
+                  class="link"
+                  data-sveltekit-preload-data="tap"
+                  on:click={() => (registerFlag = !registerFlag)}>here</a
+                >
+                to login.</span
               >
-              to login.</span
-            >
+            </div>
+
             <div class="form-control mt-6">
               <button class="btn btn-primary" type="submit">Register</button>
             </div>

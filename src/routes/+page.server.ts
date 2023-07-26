@@ -13,7 +13,14 @@ export const load: PageServerLoad = async ({ locals }) => {
   console.log("Home page loaded");
   // redirect user if logged in
   if (locals.user) {
+    console.log("Redirecting to the product list page");
     throw redirect(302, "/productsList");
+  } else {
+    console.log("Setting register flag");
+    return {
+      // registrationSuccess: true,
+      registerFlag: false,
+    };
   }
 };
 
@@ -95,7 +102,12 @@ const register: Action = async ({ request }) => {
 
   console.log("Redirecting after registration");
 
-  throw redirect(303, "/");
+  return {
+    registrationSuccess: true,
+    // registerFlag: false,
+  };
+
+  // throw redirect(303, "/");
 };
 
 export const actions: Actions = { login, register };

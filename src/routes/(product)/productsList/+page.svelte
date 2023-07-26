@@ -1,5 +1,6 @@
 <script lang="ts">
   import { applyAction, enhance } from "$app/forms";
+  import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
 
@@ -7,52 +8,89 @@
 
   let fetchedData = data.page_server_data.productRows;
   console.log("page.data.user: ", data.user);
+
+  export let siteUrl = "";
+
+  if (browser) {
+    const { protocol, host } = window.location;
+    siteUrl = `${protocol}//${host}`;
+  }
 </script>
 
 <div class="flex items-center justify-center p-12">
   <div class="mx-auto w-full lg:max-w-[680px] max-w-xl">
-    <div class="overflow-x-auto">
-      <h1 class="text-4xl font-medium mb-5">Products</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Link</th>
-            <th>Edit/Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each fetchedData as item, index}
+    {#if fetchedData.length === 0}
+      <!-- No Table -->
+      <div class="text-right mt-2">
+        {#if $page.data.user}
+          <div class="hero-content text-center">
+            <div class="max-w-md">
+              <h1 class="text-5xl font-bold">
+                Automatic URL <br /> Redirection
+              </h1>
+              <p class="py-6">
+                Add the Product, URL according to the countries and you will get
+                a single link to share with your customers.
+              </p>
+              <a
+                class="btn btn-primary text-center"
+                data-sveltekit-preload-data="tap"
+                href="/addProduct">Add Products</a
+              >
+            </div>
+          </div>
+        {/if}
+      </div>
+    {:else}
+      <div class="overflow-x-auto">
+        <h1 class="text-4xl font-medium mb-5">Products</h1>
+        <!-- No table -->
+        <table class="table">
+          <thead>
             <tr>
-              <td>{item.name}</td>
-              <td class="link">
-                https://localhost.com/product/{`${encodeURI(item.name)}`}
-              </td>
-              <td>
-                <a
-                  class="btn btn-accent"
-                  data-sveltekit-preload-data="tap"
-                  href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
-                >
-                <a
-                  class="btn btn-neutral"
-                  data-sveltekit-preload-data="tap"
-                  href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
-                >
-              </td>
+              <th>Product Name</th>
+              <th>Link</th>
+              <th>Edit/Delete</th>
             </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
-    <div class="text-right mt-2">
-      {#if $page.data.user}
-        <a
-          class="btn btn-primary"
-          data-sveltekit-preload-data="tap"
-          href="/addProduct">Add Products</a
-        >
-      {/if}
-    </div>
+          </thead>
+          <tbody>
+            {#each fetchedData as item, index}
+              <tr>
+                <td>{item.name}</td>
+                <td>
+                  <a
+                    class="link"
+                    href="{`${siteUrl}`}/{`${encodeURI(item.name)}`}"
+                    >{`${siteUrl}`}/{`${encodeURI(item.name)}`}</a
+                  >
+                </td>
+                <td>
+                  <a
+                    class="btn btn-accent"
+                    data-sveltekit-preload-data="tap"
+                    href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
+                  >
+                  <a
+                    data-sveltekit-reload
+                    class="btn btn-neutral"
+                    data-sveltekit-preload-data="tap"
+                    href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
+                  >
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+      <div class="text-right mt-2">
+        {#if $page.data.user}
+          <a
+            class="btn btn-primary"
+            data-sveltekit-preload-data="tap"
+            href="/addProduct">Add Products</a
+          >
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>

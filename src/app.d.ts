@@ -8,6 +8,11 @@ declare global {
         role: string;
       };
       country: string;
+      URL: string;
+    }
+    interface PageData {
+      registrationSuccess: boolean;
+      registerFlag: boolean;
     }
     // interface Error {}
     // interface Locals {}

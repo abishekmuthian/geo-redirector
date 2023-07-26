@@ -5,7 +5,7 @@ export const load: PageServerLoad = async () => {
   // we only use this endpoint for the api
   // and don't need to see the page
   console.log("Inside logout PageServerLoad");
-  throw redirect(302, "/");
+  throw redirect(303, "/");
 };
 
 export const actions: Actions = {
