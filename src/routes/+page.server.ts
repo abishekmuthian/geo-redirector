@@ -35,7 +35,7 @@ const login: Action = async ({ cookies, request }) => {
   const user = await db.user.findUnique({ where: { username } });
 
   if (!user) {
-    return fail(400, { credentials: true });
+    return fail(400, { userNotFound: true });
   }
 
   const userPassword = await bcrypt.compare(password, user.passwordHash);

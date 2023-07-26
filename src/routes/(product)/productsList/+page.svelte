@@ -6,45 +6,50 @@
   export let data: PageData;
 
   let fetchedData = data.page_server_data.productRows;
-  console.log("page.data.user: ", data.user);
+  // console.log("page.data.user: ", data.user);
 </script>
 
 <div class="flex items-center justify-center p-12">
   <div class="mx-auto w-full lg:max-w-[680px] max-w-xl">
-    <div class="overflow-x-auto">
-      <h1 class="text-4xl font-medium mb-5">Products</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Link</th>
-            <th>Edit/Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each fetchedData as item, index}
+    {#if fetchedData.length > 0}
+      <div class="overflow-x-auto">
+        <h1 class="text-4xl font-medium mb-5">Products</h1>
+        <table class="table">
+          <thead>
             <tr>
-              <td>{item.name}</td>
-              <td class="link">
-                https://localhost.com/product/{`${encodeURI(item.name)}`}
-              </td>
-              <td>
-                <a
-                  class="btn btn-accent"
-                  data-sveltekit-preload-data="tap"
-                  href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
-                >
-                <a
-                  class="btn btn-neutral"
-                  data-sveltekit-preload-data="tap"
-                  href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
-                >
-              </td>
+              <th>Product Name</th>
+              <th>Link</th>
+              <th>Edit/Delete</th>
             </tr>
-          {/each}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {#each fetchedData as item, index}
+              <tr>
+                <td>{item.name}</td>
+                <td class="link">
+                  https://localhost.com/product/{`${encodeURI(item.name)}`}
+                </td>
+                <td>
+                  <a
+                    class="btn btn-accent"
+                    data-sveltekit-preload-data="tap"
+                    href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
+                  >
+                  <a
+                    data-sveltekit-reload
+                    class="btn btn-neutral"
+                    data-sveltekit-preload-data="tap"
+                    href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
+                  >
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    {:else}
+      <h1>You haven't added any product.</h1>
+    {/if}
     <div class="text-right mt-2">
       {#if $page.data.user}
         <a

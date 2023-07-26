@@ -1,6 +1,8 @@
 import type { PageServerLoad } from "./$types";
 import { db } from "$lib/database";
 
+// location.reload();
+
 export const load: PageServerLoad = async ({ locals }) => {
   if (locals.user) {
     console.log(
