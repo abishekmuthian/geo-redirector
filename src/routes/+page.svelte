@@ -54,7 +54,7 @@
                 class="input input-bordered"
               />
               <!--           <label class="label">
-              <a                     data-sveltekit-preload-data="tap"
+              <a                     data-sveltekit-preload-data="off"
  href="#" class="label-text-alt link link-hover"
                 >Forgot password?</a
               >
@@ -82,7 +82,7 @@
                 <span
                   >Click <a
                     class="link"
-                    data-sveltekit-preload-data="tap"
+                    data-sveltekit-preload-data="off"
                     on:click={() => (registerFlag = !registerFlag)}
                     href="">here</a
                   >
@@ -118,7 +118,7 @@
                 class="input input-bordered"
               />
               <!--           <label class="label">
-              <a                     data-sveltekit-preload-data="tap"
+              <a                     data-sveltekit-preload-data="off"
  href="#" class="label-text-alt link link-hover"
                 >Forgot password?</a
               >
@@ -144,7 +144,7 @@
               <span
                 >Click <a
                   class="link"
-                  data-sveltekit-preload-data="tap"
+                  data-sveltekit-preload-data="off"
                   on:click={() => (registerFlag = !registerFlag)}>here</a
                 >
                 to login.</span

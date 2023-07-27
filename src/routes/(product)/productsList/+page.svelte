@@ -34,7 +34,7 @@
               </p>
               <a
                 class="btn btn-primary text-center"
-                data-sveltekit-preload-data="tap"
+                data-sveltekit-preload-data="off"
                 href="/addProduct">Add Products</a
               >
             </div>
@@ -42,10 +42,10 @@
         {/if}
       </div>
     {:else}
-      <div class="overflow-x-auto">
-        <h1 class="text-4xl font-medium mb-5">Products</h1>
+      <h1 class="text-4xl font-medium mb-5">Products</h1>
+      <div class="overflow-x-auto sm:overflow-scroll">
         <!-- No table -->
-        <table class="lg:table-lg md:table-xs">
+        <table class="table lg:table-lg sm:table-xs">
           <thead>
             <tr>
               <th>Product Name</th>
@@ -59,7 +59,7 @@
                 <td>{item.name}</td>
                 <td>
                   <a
-                    data-sveltekit-preload-data="tap"
+                    data-sveltekit-preload-data="off"
                     class="link"
                     href="{`${siteUrl}`}/product/{`${encodeURI(
                       item.name
@@ -70,17 +70,20 @@
                   >
                 </td>
                 <td>
-                  <a
-                    class="btn btn-accent"
-                    data-sveltekit-preload-data="tap"
-                    href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
-                  >
-                  <a
-                    data-sveltekit-reload
-                    class="btn btn-neutral"
-                    data-sveltekit-preload-data="tap"
-                    href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
-                  >
+                  <div class="grid grid-rows-2 mt-2">
+                    <a
+                      class="btn btn-accent"
+                      data-sveltekit-preload-data="off"
+                      href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
+                    >
+                    <a
+                      data-sveltekit-reload
+                      class="btn btn-neutral mt-2"
+                      data-sveltekit-preload-data="off"
+                      href="/deleteProduct/{`${encodeURI(item.name)}`}"
+                      >Delete</a
+                    >
+                  </div>
                 </td>
               </tr>
             {/each}
@@ -91,7 +94,7 @@
         {#if $page.data.user}
           <a
             class="btn btn-primary"
-            data-sveltekit-preload-data="tap"
+            data-sveltekit-preload-data="off"
             href="/addProduct">Add Products</a
           >
         {/if}
