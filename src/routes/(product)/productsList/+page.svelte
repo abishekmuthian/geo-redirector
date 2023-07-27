@@ -45,7 +45,7 @@
       <div class="overflow-x-auto">
         <h1 class="text-4xl font-medium mb-5">Products</h1>
         <!-- No table -->
-        <table class="table">
+        <table class="lg:table-lg md:table-xs">
           <thead>
             <tr>
               <th>Product Name</th>
@@ -59,6 +59,7 @@
                 <td>{item.name}</td>
                 <td>
                   <a
+                    data-sveltekit-preload-data="tap"
                     class="link"
                     href="{`${siteUrl}`}/product/{`${encodeURI(
                       item.name
