@@ -3,10 +3,13 @@
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
+  import { redirect } from "@sveltejs/kit";
+  import { goto } from "$app/navigation";
 
   export let data: PageData;
 
-  let fetchedData = data.page_server_data.productRows;
+  // let fetchedData = data.page_server_data.productRows;
+  $: fetchedData = data.page_server_data.productRows;
   console.log("page.data.user: ", data.user);
 
   export let siteUrl = "";
@@ -15,6 +18,19 @@
     const { protocol, host } = window.location;
     siteUrl = `${protocol}//${host}`;
   }
+  const handleDelete = (item: any) => {
+    console.log("item: ", item);
+    let newTableData = fetchedData.filter((row) => row.id !== item.id);
+    console.log("new table data: ", newTableData[0], newTableData[1]);
+    fetchedData = [...newTableData];
+    let newUrl = `/deleteProduct/${encodeURI(item.name)}`;
+    console.log("new url: ", newUrl);
+
+    // throw redirect(302, `/deleteProduct/${encodeURI(item.name)}`);
+
+    goto(newUrl);
+    // on:click={() => handleDelete(item)}
+  };
 </script>
 
 <div class="flex items-center justify-center p-12">
@@ -74,12 +90,18 @@
                     data-sveltekit-preload-data="tap"
                     href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
                   >
-                  <a
-                    data-sveltekit-reload
+                  <!-- <a
                     class="btn btn-neutral"
                     data-sveltekit-preload-data="tap"
+                    on:click|once={() => handleDelete(item)}
                     href="/deleteProduct/{`${encodeURI(item.name)}`}">Delete</a
+                  > -->
+                  <button
+                    class="btn btn-neutral"
+                    on:click={() => handleDelete(item)}
                   >
+                    Delete
+                  </button>
                 </td>
               </tr>
             {/each}

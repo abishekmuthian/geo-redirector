@@ -20,6 +20,7 @@
   console.log("RegistrationSuccess is:", registrationSuccess);
 
   console.log("Register flag is:", registerFlag);
+  let userNameFocus: boolean = false;
 </script>
 
 <div class="hero min-h-screen bg-base-200">
@@ -41,6 +42,10 @@
                 placeholder="Username"
                 name="username"
                 class="input input-bordered"
+                on:focus={() => {
+                  form.credentials = "";
+                  form.invalid = "";
+                }}
               />
             </div>
             <div class="form-control">
@@ -52,6 +57,10 @@
                 placeholder="password"
                 name="password"
                 class="input input-bordered"
+                on:focus={() => {
+                  form.credentials = "";
+                  form.invalid = "";
+                }}
               />
               <!--           <label class="label">
               <a                     data-sveltekit-preload-data="tap"

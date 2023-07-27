@@ -95,7 +95,7 @@ export const actions = {
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
-          console.log("Edit error: Duplicate country is not allowed.");
+          // console.log("Edit error: Duplicate country is not allowed.");
           return fail(400, { duplicateCountry: true });
         }
       }

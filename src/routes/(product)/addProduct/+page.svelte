@@ -162,6 +162,9 @@
         </h1>
       {:else}{""}
       {/if}
+      {#if form?.invalidURL}
+        <h1>URL is invalid. Kindly add the protocol</h1>
+      {/if}
     </div>
   </div>
 </div>

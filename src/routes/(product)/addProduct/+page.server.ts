@@ -12,6 +12,15 @@ export const load: PageServerLoad = async ({ locals }) => {
   }
 };
 
+function isUrlValid(inputURL: string) {
+  try {
+    new URL(inputURL);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 function buildLinksArray(arr = []) {
   let output = [];
   let country = "";
@@ -47,6 +56,11 @@ const addProduct: Action = async ({ request }) => {
       typeof inputLinks[i]["url"] !== "string"
     ) {
       return fail(400, { invalid: true });
+    }
+  }
+  for (let i = 0; i < inputLinks.length; i++) {
+    if (!isUrlValid(inputLinks[i]["url"])) {
+      return fail(400, { invalidURL: true });
     }
   }
 

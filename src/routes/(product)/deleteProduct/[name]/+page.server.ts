@@ -6,6 +6,7 @@ import type Page from "../../../+page.svelte";
 
 //
 export const load = (async ({ params: { name }, locals }) => {
+  console.log("delete name: ", name);
   const deleteProduct = await db.product.findUnique({
     where: {
       name_owner: {
