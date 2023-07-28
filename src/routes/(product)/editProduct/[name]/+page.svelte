@@ -11,9 +11,6 @@
 
   let fetchedData = data.page_server_data.productRow;
   let productName = fetchedData?.name;
-  let linksArr = fetchedData?.links;
-  let selected: string = "-Select Country-";
-
   let countryCodes: any = {};
   let key: string;
   for (let i = 0; i < countries.length; i++) {

@@ -5,11 +5,13 @@ import { fail, redirect, type RequestHandler } from "@sveltejs/kit";
 import type { Action, Actions } from "./$types";
 import { Prisma } from "@prisma/client";
 
+let editProduct: any;
+
 export const load: PageServerLoad = async ({ params: { name }, locals }) => {
   if (locals.user) {
     console.log("username in edit product page server: ", locals.user);
   }
-  const editProduct = await db.product.findUnique({
+  editProduct = await db.product.findUnique({
     where: {
       name_owner: {
         name: name,
@@ -28,10 +30,18 @@ export const load: PageServerLoad = async ({ params: { name }, locals }) => {
   });
 
   return {
-    page_server_data: { productRow: editProduct },
+    page_server_data: { productRow: editProduct, urlInvalid: false },
   };
 };
 
+function isUrlValid(inputURL: string) {
+  try {
+    new URL(inputURL);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
 function buildLinksArray(arr = []) {
   let output = [];
   let country = "";
@@ -63,6 +73,19 @@ export const actions = {
         return fail(400, { invalid: true });
       }
     }
+
+    // for (let i = 0; i < inputLinks.length; i++) {
+    //   if (!isUrlValid(inputLinks[i]["url"])) {
+    //     console.log("edit product while failing: ", editProduct);
+    //     // return {
+    //     //   page_server_data: { productRow: editProduct, urlInvalid: true },
+    //     // };
+
+    //     return fail(400, {
+    //       page_server_data: { productRow: editProduct, urlInvalid: true },
+    //     });
+    //   }
+    // }
     const product = await db.product.findUnique({
       where: {
         name_owner: {

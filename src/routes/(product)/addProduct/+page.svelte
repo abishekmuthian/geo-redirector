@@ -50,6 +50,12 @@
     let key: any = countries[i]["cca2"];
     countryCodes[key] = countries[i]["name"]["common"];
   }
+  const clearMessages = () => {
+    if (form) {
+      form.product = "";
+      form.invalidURL = "";
+    }
+  };
 </script>
 
 <div class="flex items-center justify-center p-12">
@@ -68,6 +74,7 @@
             type="text"
             bind:value={productName}
             required
+            on:focus={clearMessages}
           />
         </div>
 
@@ -101,6 +108,7 @@
                     type="text"
                     bind:value={values[i].url}
                     required
+                    on:focus={clearMessages}
                   />
                 </div>
               </div>
