@@ -10,7 +10,7 @@ Clicking the above image would open the video in YouTube.
 [https://geo-redirector.vercel.app](https://geo-redirector.vercel.app)
 
 ## How
-Add unique URL for each country and get a single URL to share with others. The URL will be redirected to the unique URL according to the visitor's country.
+Geo Redirector is a self-hosted URL redirection application. Add unique URL for each country and get a single URL to share with others. The URL will be redirected to the unique URL according to the visitor's country.
 
 ## Screenshots
 
@@ -32,6 +32,12 @@ TiDB Cluster in [TiDB Serverless](https://tidbcloud.com/free-trial). (Recommende
 
 ## Deploy
 Deploy to Vercel with a single click.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fabishekmuthian%2Fgeo-redirector&env=DATABASE_URL,DEFAULT_COUNTRY&envDescription=DATABASE%20URI%20for%20database%20and%20DEFAULT_COUNTRY%20for%20redirecting%20to%20if%20there%20are%20no%20payment%20links%20for%20the%20visitor's%20country.%20)
+
+## Environment Variable
+1. `DATABASE_URL` MySQL database URI.
+2. `DEFAULT_COUNTRY` Default country for redirecting to if there are no payment links for the visitor's country. 
 
 ## Development
 1. Clone the repository.
