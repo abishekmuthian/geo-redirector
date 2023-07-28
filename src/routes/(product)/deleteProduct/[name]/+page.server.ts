@@ -6,7 +6,7 @@ import type Page from "../../../+page.svelte";
 
 //
 export const load = (async ({ params: { name }, locals }) => {
-  console.log("delete name: ", name);
+  //console.log("delete name: ", name);
   const deleteProduct = await db.product.findUnique({
     where: {
       name_owner: {
@@ -26,7 +26,7 @@ export const load = (async ({ params: { name }, locals }) => {
       },
     },
   });
-  // console.log("delete product:::", deleteProduct);
+  //console.log("delete product:::", deleteProduct);
   const removedLinks = await db.product.update({
     where: {
       id: deleteProduct?.id,
@@ -40,14 +40,14 @@ export const load = (async ({ params: { name }, locals }) => {
       links: true,
     },
   });
-  // console.log("removedLinks ", removedLinks);
+  //console.log("removedLinks ", removedLinks);
 
   const deletedProduct = await db.product.delete({
     where: {
       id: deleteProduct?.id,
     },
   });
-  console.log("Deleted Product ", deletedProduct);
+  //console.log("Deleted Product ", deletedProduct);
 
   throw redirect(302, "/productsList");
 }) satisfies PageServerLoad;

@@ -10,7 +10,7 @@
 
   // let fetchedData = data.page_server_data.productRows;
   $: fetchedData = data.page_server_data.productRows;
-  console.log("page.data.user: ", data.user);
+  //console.log("page.data.user: ", data.user);
 
   export let siteUrl = "";
 
@@ -19,12 +19,12 @@
     siteUrl = `${protocol}//${host}`;
   }
   const handleDelete = (item: any) => {
-    console.log("item: ", item);
+    //console.log("item: ", item);
     let newTableData = fetchedData.filter((row) => row.id !== item.id);
-    console.log("new table data: ", newTableData[0], newTableData[1]);
+    //console.log("new table data: ", newTableData[0], newTableData[1]);
     fetchedData = [...newTableData];
     let newUrl = `/deleteProduct/${encodeURI(item.name)}`;
-    console.log("new url: ", newUrl);
+    //console.log("new url: ", newUrl);
 
     // throw redirect(302, `/deleteProduct/${encodeURI(item.name)}`);
 

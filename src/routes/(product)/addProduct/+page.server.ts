@@ -8,7 +8,7 @@ let localUserName: string = "";
 export const load: PageServerLoad = async ({ locals }) => {
   if (locals.user) {
     localUserName = locals.user.name;
-    console.log("username in add product page server: ", locals.user);
+    //console.log("username in add product page server: ", locals.user);
   }
 };
 
@@ -41,11 +41,11 @@ const addProduct: Action = async ({ request }) => {
   const vals: any = [...data.values()];
 
   let inputLinks = buildLinksArray(vals);
-  console.log(inputLinks);
+  //console.log(inputLinks);
 
-  console.log("items: ", [...data.entries()]);
-  console.log("vals: ", [...data.values()]);
-  console.log("obj: ", Object.fromEntries(data.entries()));
+  //console.log("items: ", [...data.entries()]);
+  //console.log("vals: ", [...data.values()]);
+  //console.log("obj: ", Object.fromEntries(data.entries()));
 
   const productname = data.get("productname");
 
@@ -77,14 +77,14 @@ const addProduct: Action = async ({ request }) => {
     return fail(400, { product: true });
   }
 
-  console.log("product in add: ", product);
+  //console.log("product in add: ", product);
 
   let newProduct = {
     name: productname,
     links: inputLinks,
   };
 
-  console.log("record create");
+  //console.log("record create");
 
   try {
     const result = await db.product.create({
@@ -103,7 +103,7 @@ const addProduct: Action = async ({ request }) => {
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        console.log("Duplicate countries are not allowed");
+        //console.log("Duplicate countries are not allowed");
         return fail(400, { duplicateCountry: true });
       }
     }

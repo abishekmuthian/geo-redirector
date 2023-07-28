@@ -15,11 +15,11 @@
 
   $: registerFlag = data.registerFlag;
 
-  console.log("Page Data: ", data);
+  //console.log("Page Data: ", data);
 
-  console.log("RegistrationSuccess is:", registrationSuccess);
+  //console.log("RegistrationSuccess is:", registrationSuccess);
 
-  console.log("Register flag is:", registerFlag);
+  //console.log("Register flag is:", registerFlag);
   const clearMessages = () => {
     if (form) {
       form.credentials = "";
@@ -124,6 +124,8 @@
                 placeholder="password"
                 name="password"
                 class="input input-bordered"
+                minlength="8"
+                required
               />
               <!--           <label class="label">
               <a                     data-sveltekit-preload-data="off"

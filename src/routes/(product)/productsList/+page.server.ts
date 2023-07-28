@@ -4,12 +4,12 @@ import { db } from "$lib/database";
 // location.reload();
 
 export const load: PageServerLoad = async ({ locals }) => {
-  if (locals.user) {
+  /*   if (locals.user) {
     console.log(
       "username in add products list table page server: ",
       locals.user
     );
-  }
+  } */
   const products = await db.product.findMany({
     where: {
       owner: locals.user.name,

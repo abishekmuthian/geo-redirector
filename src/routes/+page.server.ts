@@ -10,13 +10,13 @@ enum Roles {
 }
 
 export const load: PageServerLoad = async ({ locals }) => {
-  console.log("Home page loaded");
+  //console.log("Home page loaded");
   // redirect user if logged in
   if (locals.user) {
-    console.log("Redirecting to the product list page");
+    //console.log("Redirecting to the product list page");
     throw redirect(302, "/productsList");
   } else {
-    console.log("Setting register flag");
+    //console.log("Setting register flag");
     return {
       // registrationSuccess: true,
       registerFlag: false,
@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 const login: Action = async ({ cookies, request }) => {
-  console.log("Inside Page Sever Action");
+  //console.log("Inside Page Sever Action");
   const data = await request.formData();
   const username = data.get("username");
   const password = data.get("password");
@@ -64,7 +64,7 @@ const login: Action = async ({ cookies, request }) => {
     maxAge: 60 * 60 * 24 * 30,
   });
 
-  console.log("Redirecting after login");
+  //console.log("Redirecting after login");
 
   throw redirect(302, "/productsList");
 };
@@ -100,7 +100,7 @@ const register: Action = async ({ request }) => {
     },
   });
 
-  console.log("Redirecting after registration");
+  //console.log("Redirecting after registration");
 
   return {
     registrationSuccess: true,

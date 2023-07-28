@@ -9,7 +9,7 @@ let editProduct: any;
 
 export const load: PageServerLoad = async ({ params: { name }, locals }) => {
   if (locals.user) {
-    console.log("username in edit product page server: ", locals.user);
+    //console.log("username in edit product page server: ", locals.user);
   }
   editProduct = await db.product.findUnique({
     where: {
@@ -95,7 +95,7 @@ export const actions = {
       },
     });
     if (product) {
-      console.log("product fetched for update");
+      //console.log("product fetched for update");
     }
 
     try {

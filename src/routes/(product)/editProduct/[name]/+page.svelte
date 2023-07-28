@@ -63,6 +63,7 @@
       <h1 class="text-4xl font-medium mb-5">Edit Product</h1>
 
       <form
+        class="m-2"
         method="POST"
         use:enhance
         enctype="multipart/form-data"
@@ -128,6 +129,24 @@
               </div>
             </div>
           {/each}
+          {#if duplicates.length > 0}
+            <div class="alert alert-error mt-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                ><path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                /></svg
+              >
+              <span>Duplicate country - {countryCodes[duplicates[0]]}</span>
+            </div>
+          {:else}{""}
+          {/if}
           <div class="add-remove-links mt-4">
             <div class="float-left">
               {#if duplicates.length > 0}
@@ -163,12 +182,6 @@
           </div>
         </div>
       </form>
-      {#if duplicates.length > 0}
-        <h1>
-          Duplicate country - {countryCodes[duplicates[0]]}
-        </h1>
-      {:else}{""}
-      {/if}
     </div>
   </div>
 </div>

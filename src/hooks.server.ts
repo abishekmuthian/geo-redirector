@@ -3,12 +3,12 @@ import { db } from "$lib/database";
 
 export const handle: Handle = async ({ event, resolve }) => {
   // Get the ip from the headers
-  // console.log("headers: ", event.request.headers);
+  // //console.log("headers: ", event.request.headers);
 
-  console.log(
+  /*  console.log(
     "Country in hooks: ",
     event.request.headers.get("x-vercel-ip-country")
-  );
+  ); */
 
   // If the country isn't received from the header, Set a default country (Get the country from vercel env)
 
@@ -21,7 +21,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   // get cookies from browser
   const session = event.cookies.get("session");
 
-  console.log("session:", session);
+  //console.log("session:", session);
 
   if (!session) {
     // if there is no session load page as normal
@@ -34,7 +34,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     select: { username: true, role: true },
   });
 
-  console.log("user:", user);
+  //console.log("user:", user);
 
   // if `user` exists set `events.local`
   if (user) {
