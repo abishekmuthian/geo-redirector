@@ -113,6 +113,7 @@
                 placeholder="Username"
                 name="username"
                 class="input input-bordered"
+                pattern="[a-zA-Z0-9]+"
               />
             </div>
             <div class="form-control">
