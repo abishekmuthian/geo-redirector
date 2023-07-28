@@ -43,7 +43,7 @@
       </div>
     {:else}
       <h1 class="text-4xl font-medium mb-5">Products</h1>
-      <div class="overflow-x-auto sm:overflow-scroll">
+      <div class="overflow-x-auto">
         <!-- No table -->
         <table class="table lg:table-lg sm:table-xs">
           <thead>
