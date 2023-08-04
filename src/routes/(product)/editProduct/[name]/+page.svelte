@@ -55,6 +55,7 @@
   }
   //
   $: duplicates = countryCount(values);
+  // on:submit={(e) => (submitting = true)}
 </script>
 
 <div class="flex items-center justify-center p-12">
@@ -122,7 +123,8 @@
                   class="input input-bordered w-full max-w-xs"
                   id="url"
                   name="url"
-                  type="text"
+                  type="url"
+                  pattern="https?://.+"
                   bind:value={values[i].url}
                   required
                 />
