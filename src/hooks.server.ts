@@ -18,6 +18,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   event.locals.country = country;
 
+  console.log("Country in event locals: ", event.locals.country);
+
   // get cookies from browser
   const session = event.cookies.get("session");
 
