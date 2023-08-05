@@ -21,10 +21,13 @@ Geo Redirector is a self-hosted URL redirection application. Add unique URL for 
 ![Add Product on Geo Redirector](/demo/addProduct.png)
 
 ### Products
-![Products page on Geo Redirector](/demo/Products.png)
+![Products page on Geo Redirector](/demo/products_v2.png)
 
 ### Redirected Stripe Payment Page
 ![Stripe Payment Page](/demo/stripe_payment_page.png)
+
+### Analytics
+![Analytics page on Geo Redirector](/demo/analytics_map.png)
 
 ## Requirements
 ### MySQL Database
