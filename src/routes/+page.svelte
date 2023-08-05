@@ -113,7 +113,6 @@
                 placeholder="Username"
                 name="username"
                 class="input input-bordered"
-                pattern="[a-zA-Z0-9]+"
               />
             </div>
             <div class="form-control">
@@ -135,6 +134,11 @@
               >
             </label> -->
             </div>
+            {#if form?.invalid_username}
+              <div class="alert alert-error mt-4">
+                <span>Only alphabets, numbers, underscore are allowed.</span>
+              </div>
+            {/if}
             {#if form?.user}
               <div class="alert alert-error mt-4">
                 <span>Username is taken.</span>

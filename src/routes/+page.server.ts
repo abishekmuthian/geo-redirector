@@ -83,6 +83,16 @@ const register: Action = async ({ request }) => {
     return fail(400, { invalid: true });
   }
 
+  if (
+    (() => {
+      let regexp = new RegExp(/^[a-zA-Z0-9_]+$/);
+      let test = regexp.test(username);
+      return !test;
+    })()
+  ) {
+    return fail(400, { invalid_username: true });
+  }
+
   const user = await db.user.findUnique({
     where: { username },
   });
@@ -100,7 +110,7 @@ const register: Action = async ({ request }) => {
     },
   });
 
-  //console.log("Redirecting after registration");
+  // console.log("Redirecting after registration");
 
   return {
     registrationSuccess: true,

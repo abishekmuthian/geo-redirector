@@ -66,7 +66,7 @@
             <tr>
               <th>Product Name</th>
               <th>Link</th>
-              <th>Edit/Delete</th>
+              <th>Analytics|Edit|Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -86,14 +86,19 @@
                   >
                 </td>
                 <td>
-                  <div class="grid grid-rows-2 mt-2">
+                  <div class="grid grid-rows-3 gap-2">
+                    <a
+                    class="btn btn-secondary"
+                    data-sveltekit-preload-data="off"
+                    href="/product/{`${encodeURI(item.name)}`}/{`${encodeURI(item.id)}`}/analytics">Analytics
+                    </a>
                     <a
                       class="btn btn-accent"
                       data-sveltekit-preload-data="off"
                       href="/editProduct/{`${encodeURI(item.name)}`}">Edit</a
                     >
                     <button
-                      class="btn btn-neutral mt-2"
+                      class="btn btn-neutral"
                       on:click={() => handleDelete(item)}
                     >
                       Delete
