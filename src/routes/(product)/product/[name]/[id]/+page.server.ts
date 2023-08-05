@@ -14,6 +14,7 @@ for (let i = 0; i < countries.length; i++) {
 
 //console.log("product/productname");
 export const load = (async ({ params, locals }) => {
+  console.log("Country in locals: ", locals.country);
   //console.log("Product name: ", params.name);
   //console.log("Product id: ", params.id);
   let productId = parseInt(params.id);
