@@ -10,7 +10,7 @@ for (let i = 0; i < countries.length; i++) {
   let key: any = countries[i]["cca2"];
   countryCodes[key] = countries[i]["name"]["common"];
 }
-// console.log("in product page - counrty code object: ", countryCodes);
+console.log("in product page - counrty code object: ", countryCodes);
 
 //console.log("product/productname");
 export const load = (async ({ params, locals }) => {
@@ -48,10 +48,8 @@ export const load = (async ({ params, locals }) => {
       },
     },
   });
-  console.log("get product:::", getProduct);
-  console.log("visits:::", getProduct?.analytics.length);
 
-  //console.log("Required country URL", getProduct?.links[0]["url"]);
+  // add or increment views count
 
   if (getProduct?.analytics.length === 0) {
     console.log("when no visits already");
@@ -77,7 +75,7 @@ export const load = (async ({ params, locals }) => {
       console.log("error in visit add");
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
-          return fail(400, { duplicateCountry: true });
+          return fail(400, { addViewError: true });
         }
       }
       throw e;
@@ -99,41 +97,12 @@ export const load = (async ({ params, locals }) => {
       console.log("error in visit increment");
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
-          return fail(400, { duplicateCountry: true });
+          return fail(400, { addViewError: true });
         }
       }
       throw e;
     }
   }
-
-  // update/add url visit
-  // try {
-  //   const result = await db.product.update({
-  //     where: {
-  //       id: product?.id,
-  //     },
-  //     data: {
-  //       name: productname,
-
-  //       links: {
-  //         deleteMany: {},
-  //         create: inputLinks,
-  //       },
-  //     },
-  //     include: {
-  //       links: true,
-  //     },
-  //   });
-  // } catch (e) {
-  //   if (e instanceof Prisma.PrismaClientKnownRequestError) {
-  //     if (e.code === "P2002") {
-  //       return fail(400, { duplicateCountry: true });
-  //     }
-  //   }
-  //   throw e;
-  // }
-
-  // update/add url
 
   let productURL = "";
   try {
