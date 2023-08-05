@@ -10,7 +10,6 @@ for (let i = 0; i < countries.length; i++) {
   let key: any = countries[i]["cca2"];
   countryCodes[key] = countries[i]["name"]["common"];
 }
-console.log("in product page - counrty code object: ", countryCodes);
 
 //console.log("product/productname");
 export const load = (async ({ params, locals }) => {
@@ -52,7 +51,7 @@ export const load = (async ({ params, locals }) => {
 
   // add or increment views count
 
-  if (getProduct?.analytics.length === 0) {
+  if (getProduct?.analytics.length === 0 && countryCodes[locals.country]) {
     console.log("when no visits already");
     let visitDetails = {};
     try {
@@ -81,7 +80,7 @@ export const load = (async ({ params, locals }) => {
       }
       throw e;
     }
-  } else if (getProduct?.analytics.length) {
+  } else if (getProduct?.analytics.length && countryCodes[locals.country]) {
     console.log("country already visited");
     try {
       const result = await db.analytics.update({
