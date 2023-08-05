@@ -105,7 +105,7 @@
                     class="input input-bordered w-full max-w-xs"
                     id="url"
                     name="url"
-                    type="text"
+                    type="url"
                     bind:value={values[i].url}
                     required
                     on:focus={clearMessages}
