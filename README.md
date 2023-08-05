@@ -2,7 +2,7 @@
 We have to provide unique payment links for our customers from different countries with different currencies, With Geo Redirector we can give a single link to all our customers from around the world.
 
 ## Video Demo
-[![Video Demo](/demo/Thumbnail.png)](https://youtu.be/bLmhHPU_bdw)
+[![Video Demo](/demo/Thumbnail.png)](https://www.youtube.com/watch?v=oLmwjdXuaPE)
 
 Clicking the above image would open the video in YouTube.
 
@@ -21,10 +21,13 @@ Geo Redirector is a self-hosted URL redirection application. Add unique URL for 
 ![Add Product on Geo Redirector](/demo/addProduct.png)
 
 ### Products
-![Products page on Geo Redirector](/demo/Products.png)
+![Products page on Geo Redirector](/demo/products_v2.png)
 
 ### Redirected Stripe Payment Page
 ![Stripe Payment Page](/demo/stripe_payment_page.png)
+
+### Analytics
+![Analytics page on Geo Redirector](/demo/analytics_map.png)
 
 ## Requirements
 ### MySQL Database
