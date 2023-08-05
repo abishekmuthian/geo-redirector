@@ -3,6 +3,7 @@ import type { PageServerLoad } from "../$types";
 import { db } from "$lib/database";
 import { Prisma } from "@prisma/client";
 import countries from "$lib/data/countries.json";
+
 let countryCodes: any = {};
 let key: string;
 for (let i = 0; i < countries.length; i++) {
