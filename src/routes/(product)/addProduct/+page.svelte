@@ -15,7 +15,6 @@
   ];
 
   const addLinks = () => {
-    //console.log("add links function");
     values = [...values, { country: "", url: "" }];
   };
   const removeLinks = () => {
@@ -41,7 +40,6 @@
 
     return duplicateCountries;
   }
-  //
   $: duplicates = countryCount(values);
 
   let countryCodes: any = {};
@@ -105,7 +103,8 @@
                     class="input input-bordered w-full max-w-xs"
                     id="url"
                     name="url"
-                    type="text"
+                    type="url"
+                    placeholder="Enter a valid URL"
                     bind:value={values[i].url}
                     required
                     on:focus={clearMessages}

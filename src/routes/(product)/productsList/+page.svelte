@@ -1,16 +1,12 @@
 <script lang="ts">
-  import { applyAction, enhance } from "$app/forms";
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import type { PageData } from "./$types";
-  import { redirect } from "@sveltejs/kit";
   import { goto } from "$app/navigation";
 
   export let data: PageData;
 
-  // let fetchedData = data.page_server_data.productRows;
   $: fetchedData = data.page_server_data.productRows;
-  //console.log("page.data.user: ", data.user);
 
   export let siteUrl = "";
 
@@ -19,17 +15,11 @@
     siteUrl = `${protocol}//${host}`;
   }
   const handleDelete = (item: any) => {
-    //console.log("item: ", item);
     let newTableData = fetchedData.filter((row) => row.id !== item.id);
-    //console.log("new table data: ", newTableData[0], newTableData[1]);
     fetchedData = [...newTableData];
     let newUrl = `/deleteProduct/${encodeURI(item.name)}`;
-    //console.log("new url: ", newUrl);
-
-    // throw redirect(302, `/deleteProduct/${encodeURI(item.name)}`);
 
     goto(newUrl);
-    // on:click={() => handleDelete(item)}
   };
 </script>
 
@@ -60,7 +50,6 @@
     {:else}
       <h1 class="text-4xl font-medium mb-5">Products</h1>
       <div class="overflow-x-auto">
-        <!-- No table -->
         <table class="table lg:table-lg sm:table-xs">
           <thead>
             <tr>
@@ -88,9 +77,12 @@
                 <td>
                   <div class="grid grid-rows-3 gap-2">
                     <a
-                    class="btn btn-secondary"
-                    data-sveltekit-preload-data="off"
-                    href="/product/{`${encodeURI(item.name)}`}/{`${encodeURI(item.id)}`}/analytics">Analytics
+                      class="btn btn-secondary"
+                      data-sveltekit-preload-data="off"
+                      href="/product/{`${encodeURI(item.name)}`}/{`${encodeURI(
+                        item.id
+                      )}`}/analytics"
+                      >Analytics
                     </a>
                     <a
                       class="btn btn-accent"

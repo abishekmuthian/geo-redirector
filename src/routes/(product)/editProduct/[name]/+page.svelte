@@ -1,13 +1,9 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-
-  import { page } from "$app/stores";
   import type { PageData } from "./$types";
   import countries from "$lib/data/countries.json";
 
   export let data: PageData;
-
-  let submitting;
 
   let fetchedData = data.page_server_data.productRow;
   let productName = fetchedData?.name;
@@ -24,7 +20,6 @@
       values.push(fetchedData?.links[i]);
     }
   }
-  // console.log("values:0 ", values[0]);
 
   const addLinks = () => {
     values = [...values, { country: "", url: "" }];
@@ -33,7 +28,7 @@
     values = values.slice(0, values.length - 1);
   };
 
-  // duplicate countries logic
+  // Check for duplicate countries
   function countryCount(arr: { country: string; url: string }[]) {
     let obj: any = {};
     let duplicateCountries = [];
@@ -53,9 +48,7 @@
 
     return duplicateCountries;
   }
-  //
   $: duplicates = countryCount(values);
-  // on:submit={(e) => (submitting = true)}
 </script>
 
 <div class="flex items-center justify-center p-12">
@@ -63,13 +56,7 @@
     <div class="overflow-x-auto">
       <h1 class="text-4xl font-medium mb-5">Edit Product</h1>
 
-      <form
-        class="m-2"
-        method="POST"
-        use:enhance
-        enctype="multipart/form-data"
-        on:submit={(e) => (submitting = true)}
-      >
+      <form class="m-2" method="POST" use:enhance enctype="multipart/form-data">
         <div>
           <label for="productname">Product Name</label>
           <input
@@ -126,6 +113,7 @@
                   type="url"
                   pattern="https?://.+"
                   bind:value={values[i].url}
+                  placeholder="Enter a valid URL"
                   required
                 />
               </div>

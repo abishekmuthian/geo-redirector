@@ -1,8 +1,7 @@
 <script lang="ts">
   import "../app.css";
   import { page } from "$app/stores";
-  import { applyAction, enhance } from "$app/forms";
-  import { goto, invalidate, invalidateAll } from "$app/navigation";
+  import { enhance } from "$app/forms";
 </script>
 
 <svelte:head>
@@ -20,24 +19,12 @@
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal p-0">
-        <!--   {#if !$page.data.user}
-    <a class="link" href="/login">Login</a>
-    <a                     data-sveltekit-preload-data="off"
- href="/register">Register</a>
-  {/if} -->
         {#if $page.data.user}
-          <!-- <a                     data-sveltekit-preload-data="off"
- href="/admin">Admin</a> -->
-          <!-- <a                     data-sveltekit-preload-data="off"
- href="/productsList">Products</a> -->
           <form action="/logout" method="POST" use:enhance>
             <button class="btn float-right sm:float-left" type="submit"
               >Logout</button
             >
           </form>
-          <!-- <form action="/productsList" use:enhance>
-          <button type="submit">Products Page</button>
-        </form> -->
         {/if}
       </ul>
     </div>
