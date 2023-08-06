@@ -31,6 +31,9 @@ export const load = (async ({ params: { name }, locals }) => {
         links: {
           deleteMany: {},
         },
+        analytics: {
+          deleteMany: {},
+        },
       },
       include: {
         links: true,
