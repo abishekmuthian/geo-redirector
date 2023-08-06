@@ -42,6 +42,7 @@
                 placeholder="Username"
                 name="username"
                 class="input input-bordered"
+                required
                 on:focus={clearMessages}
               />
             </div>
@@ -54,6 +55,7 @@
                 placeholder="password"
                 name="password"
                 class="input input-bordered"
+                required
                 on:focus={clearMessages}
               />
             </div>
