@@ -9,23 +9,19 @@ enum Roles {
   USER = "USER",
 }
 
+// Handle redirection on home page load
 export const load: PageServerLoad = async ({ locals }) => {
-  //console.log("Home page loaded");
-  // redirect user if logged in
   if (locals.user) {
-    //console.log("Redirecting to the product list page");
     throw redirect(302, "/productsList");
   } else {
-    //console.log("Setting register flag");
     return {
-      // registrationSuccess: true,
       registerFlag: false,
     };
   }
 };
 
+// Handle login
 const login: Action = async ({ cookies, request }) => {
-  //console.log("Inside Page Sever Action");
   const data = await request.formData();
   const username = data.get("username");
   const password = data.get("password");
@@ -63,8 +59,6 @@ const login: Action = async ({ cookies, request }) => {
     secure: process.env.NODE_ENV === "production",
     maxAge: 60 * 60 * 24 * 30,
   });
-
-  //console.log("Redirecting after login");
 
   throw redirect(302, "/productsList");
 };
@@ -110,14 +104,9 @@ const register: Action = async ({ request }) => {
     },
   });
 
-  // console.log("Redirecting after registration");
-
   return {
     registrationSuccess: true,
-    // registerFlag: false,
   };
-
-  // throw redirect(303, "/");
 };
 
 export const actions: Actions = { login, register };

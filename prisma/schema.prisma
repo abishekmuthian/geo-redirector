@@ -5,6 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -24,32 +28,35 @@ model User {
 
 enum Role {
   USER
-  ADMIN 
+  ADMIN
 }
 
 model Product {
-  id     Int    @id @default(autoincrement())
-  name   String 
-  links  Link[]
+  id        Int         @id @default(autoincrement())
+  name      String
+  links     Link[]
   analytics Analytics[]
-  owner  String
+  owner     String
+
   @@unique([name, owner])
 }
 
 model Link {
-  id      Int       @id @default(autoincrement())
-  country String    
-  url     String
-  product Product @relation(fields: [productId], references: [id])
+  id        Int     @id @default(autoincrement())
+  country   String
+  url       String
+  product   Product @relation(fields: [productId], references: [id])
   productId Int
+
   @@unique([country, productId])
 }
 
 model Analytics {
-  id      Int       @id @default(autoincrement())
-  country String    
-  views  Int
-  product Product @relation(fields: [productId], references: [id])
+  id        Int     @id @default(autoincrement())
+  country   String
+  views     Int
+  product   Product @relation(fields: [productId], references: [id])
   productId Int
+
   @@unique([country, productId])
 }

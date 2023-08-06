@@ -1,4 +1,4 @@
-import { fail, redirect, type RequestHandler } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import type { Action, Actions, PageServerLoad } from "./$types";
 import { db } from "$lib/database";
 import { Prisma } from "@prisma/client";
@@ -8,7 +8,8 @@ let localUserName: string = "";
 export const load: PageServerLoad = async ({ locals }) => {
   if (locals.user) {
     localUserName = locals.user.name;
-    //console.log("username in add product page server: ", locals.user);
+  } else {
+    throw redirect(303, "/");
   }
 };
 
@@ -41,11 +42,6 @@ const addProduct: Action = async ({ request }) => {
   const vals: any = [...data.values()];
 
   let inputLinks = buildLinksArray(vals);
-  //console.log(inputLinks);
-
-  //console.log("items: ", [...data.entries()]);
-  //console.log("vals: ", [...data.values()]);
-  //console.log("obj: ", Object.fromEntries(data.entries()));
 
   const productname = data.get("productname");
 
@@ -77,15 +73,6 @@ const addProduct: Action = async ({ request }) => {
     return fail(400, { product: true });
   }
 
-  //console.log("product in add: ", product);
-
-  let newProduct = {
-    name: productname,
-    links: inputLinks,
-  };
-
-  //console.log("record create");
-
   try {
     const result = await db.product.create({
       data: {
@@ -103,7 +90,6 @@ const addProduct: Action = async ({ request }) => {
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        //console.log("Duplicate countries are not allowed");
         return fail(400, { duplicateCountry: true });
       }
     }

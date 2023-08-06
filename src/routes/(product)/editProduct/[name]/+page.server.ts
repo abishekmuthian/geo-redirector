@@ -1,37 +1,37 @@
 import type { PageServerLoad } from "./$types";
 import { db } from "$lib/database";
 
-import { fail, redirect, type RequestHandler } from "@sveltejs/kit";
-import type { Action, Actions } from "./$types";
+import { fail, redirect } from "@sveltejs/kit";
 import { Prisma } from "@prisma/client";
 
 let editProduct: any;
 
 export const load: PageServerLoad = async ({ params: { name }, locals }) => {
   if (locals.user) {
-    //console.log("username in edit product page server: ", locals.user);
-  }
-  editProduct = await db.product.findUnique({
-    where: {
-      name_owner: {
-        name: name,
-        owner: locals.user.name,
-      },
-    },
-    select: {
-      name: true,
-      links: {
-        select: {
-          country: true,
-          url: true,
+    editProduct = await db.product.findUnique({
+      where: {
+        name_owner: {
+          name: name,
+          owner: locals.user.name,
         },
       },
-    },
-  });
+      select: {
+        name: true,
+        links: {
+          select: {
+            country: true,
+            url: true,
+          },
+        },
+      },
+    });
 
-  return {
-    page_server_data: { productRow: editProduct, urlInvalid: false },
-  };
+    return {
+      page_server_data: { productRow: editProduct, urlInvalid: false },
+    };
+  } else {
+    throw redirect(303, "/");
+  }
 };
 
 function isUrlValid(inputURL: string) {
@@ -74,18 +74,6 @@ export const actions = {
       }
     }
 
-    // for (let i = 0; i < inputLinks.length; i++) {
-    //   if (!isUrlValid(inputLinks[i]["url"])) {
-    //     console.log("edit product while failing: ", editProduct);
-    //     // return {
-    //     //   page_server_data: { productRow: editProduct, urlInvalid: true },
-    //     // };
-
-    //     return fail(400, {
-    //       page_server_data: { productRow: editProduct, urlInvalid: true },
-    //     });
-    //   }
-    // }
     const product = await db.product.findUnique({
       where: {
         name_owner: {
@@ -94,9 +82,6 @@ export const actions = {
         },
       },
     });
-    if (product) {
-      //console.log("product fetched for update");
-    }
 
     try {
       const result = await db.product.update({
@@ -118,7 +103,6 @@ export const actions = {
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
-          // console.log("Edit error: Duplicate country is not allowed.");
           return fail(400, { duplicateCountry: true });
         }
       }

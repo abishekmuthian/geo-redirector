@@ -1,3 +1,4 @@
+import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "../$types";
 import { db } from "$lib/database";
 
@@ -15,7 +16,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     console.log("get analtics product:::", getProduct);
     console.log("visits:::", getProduct?.analytics.length);
     const analyticsData = new Map();
-    // Fetch product with name
+    // Fetch product
     // Iterate Analytics and set the country & views
 
     if (getProduct?.analytics.length) {
@@ -26,12 +27,10 @@ export const load: PageServerLoad = async ({ locals, params }) => {
       }
     }
 
-    // analyticsData.set("Sri Lanka", 10);
-    // analyticsData.set("India", 20);
-    // analyticsData.set("Bhutan", 5);
-
     return {
       analyticsData: analyticsData,
     };
+  } else {
+    throw redirect(303, "/");
   }
 };

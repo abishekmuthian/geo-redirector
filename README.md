@@ -41,7 +41,7 @@ Deploy to Vercel with a single click.
 ## Environment Variables
 Create a `.env` file with the following environmental variables.
 1. `DATABASE_URL` MySQL database URI.
-2. `DEFAULT_COUNTRY` Default country for redirecting to if there are no payment links for the visitor's country. 
+2. `DEFAULT_COUNTRY` Default country (ISO 3166-1 alpha-2) for redirecting to if there are no payment links for the visitor's country. 
 
 ## Development
 1. Clone the repository.

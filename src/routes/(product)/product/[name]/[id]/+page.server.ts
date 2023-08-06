@@ -11,17 +11,7 @@ for (let i = 0; i < countries.length; i++) {
   countryCodes[key] = countries[i]["name"]["common"];
 }
 
-//console.log("product/productname");
 export const load = (async ({ params, locals }) => {
-  console.log("Country in locals: ", locals.country);
-  //console.log("Product name: ", params.name);
-  //console.log("Product id: ", params.id);
-  let productId = parseInt(params.id);
-  //console.log(typeof productId, productId);
-  // Get the country here
-
-  //console.log("Country in the product server: ", locals.country);
-
   // Get the product url for the country using name and country code from the db
   const getProduct = await db.product.findUnique({
     where: {
@@ -49,11 +39,8 @@ export const load = (async ({ params, locals }) => {
     },
   });
 
-  // add or increment views count
-
+  // Add or increment views count
   if (getProduct?.analytics.length === 0 && countryCodes[locals.country]) {
-    console.log("when no visits already");
-    let visitDetails = {};
     try {
       const result = await db.product.update({
         where: {
@@ -72,7 +59,6 @@ export const load = (async ({ params, locals }) => {
         },
       });
     } catch (e) {
-      console.log("error in visit add");
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
           return fail(400, { addViewError: true });
@@ -81,7 +67,6 @@ export const load = (async ({ params, locals }) => {
       throw e;
     }
   } else if (getProduct?.analytics.length && countryCodes[locals.country]) {
-    console.log("country already visited");
     try {
       const result = await db.analytics.update({
         where: {
@@ -94,7 +79,6 @@ export const load = (async ({ params, locals }) => {
         },
       });
     } catch (e) {
-      console.log("error in visit increment");
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
           return fail(400, { addViewError: true });

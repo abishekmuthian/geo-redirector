@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { ActionData, PageData } from "./$types";
-  import { applyAction, enhance } from "$app/forms";
-  import { goto, invalidate, invalidateAll } from "$app/navigation";
+  import { enhance } from "$app/forms";
 
   export let form: ActionData;
 
@@ -15,15 +14,11 @@
 
   $: registerFlag = data.registerFlag;
 
-  //console.log("Page Data: ", data);
-
-  //console.log("RegistrationSuccess is:", registrationSuccess);
-
-  //console.log("Register flag is:", registerFlag);
   const clearMessages = () => {
     if (form) {
       form.credentials = "";
       form.invalid = "";
+      form.invalid_username = "";
     }
   };
 </script>
@@ -61,12 +56,6 @@
                 class="input input-bordered"
                 on:focus={clearMessages}
               />
-              <!--           <label class="label">
-              <a                     data-sveltekit-preload-data="off"
- href="#" class="label-text-alt link link-hover"
-                >Forgot password?</a
-              >
-            </label> -->
             </div>
             {#if form?.invalid}
               <div class="alert alert-error mt-4">
@@ -113,6 +102,8 @@
                 placeholder="Username"
                 name="username"
                 class="input input-bordered"
+                on:focus={clearMessages}
+                required
               />
             </div>
             <div class="form-control">
@@ -125,18 +116,15 @@
                 name="password"
                 class="input input-bordered"
                 minlength="8"
+                on:focus={clearMessages}
                 required
               />
-              <!--           <label class="label">
-              <a                     data-sveltekit-preload-data="off"
- href="#" class="label-text-alt link link-hover"
-                >Forgot password?</a
-              >
-            </label> -->
             </div>
             {#if form?.invalid_username}
               <div class="alert alert-error mt-4">
-                <span>Only alphabets, numbers, underscore are allowed.</span>
+                <span
+                  >Username: Only alphabets, numbers, underscore are allowed.</span
+                >
               </div>
             {/if}
             {#if form?.user}
@@ -150,10 +138,6 @@
                   <span>New message arrived.</span>
                 </div>
               </div>
-              <!-- <p>Successful registration! Redirecting to login.</p> -->
-              <!-- {() => (registerFlag = form?.registerFlag)}
-              {@debug registerFlag} -->
-              <!-- {goto("/")} -->
             {/if}
             <div class="mt-4">
               <span
